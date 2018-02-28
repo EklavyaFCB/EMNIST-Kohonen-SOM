@@ -7,23 +7,26 @@ Username: u5es2
 <!DOCTYPE html>
 <html>
 
-	<!-- UTF-8 -->
+	<!-- META -->
 	<meta charset="UTF-8"/>
-     
-     <!-- Main CSS -->
-     <link href="static/css/main.css" rel="stylesheet" type="text/css">
+	<meta name="author" content="Eklavya Sarkar">
+	<meta name="ID" content="201135564">
+	<meta name="Date" content="2018-02-25" scheme="YYYY-MM-DD">
 
-     <!-- Bootstrap CSS -->
-     <link href="static/css/bootstrap/bootstrap.css" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="static/css/bootstrap/bootstrap.css" rel="stylesheet">
 
-	<!-- Bootstrap -->
-	<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
+    <!-- Main CSS -->
+    <link href="static/css/main.css" rel="stylesheet" type="text/css">
 
-     <!-- jQuery -->
-     <script src="static/js/jQuery/jquery-3.2.1.js"></script> 
+	<!-- Cloud Bootstrap -->
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
+
+    <!-- jQuery -->
+    <script src="static/js/jQuery/jquery-3.2.1.js"></script>
 
 	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+	<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
 
 	<!-- Favicons -->
 	<link rel="apple-touch-icon" sizes="57x57" href="static/images/favicons/apple-icon-57x57.png">
@@ -44,53 +47,63 @@ Username: u5es2
 		<title>Kohonen</title>
 	</head>
 	<body onload="setUp();">
+		<div class="backNet">
+			<nav class="navbar fixed-top navbar-light" style="background-color: #2d8885;">
+			  <a class="nav-item nav-link active" a style="color:white" href="/">Home</a>
+			  <a class="nav-item nav-link" a style="color:white" href="about">About</a>
+			</nav>
 
-		<nav class="navbar fixed-top navbar-light" style="background-color: #2d8885;">
-		  <a class="nav-item nav-link active" a style="color:white" href="/">Home</a>
-		  <a class="nav-item nav-link" a style="color:white" href="about">About</a>
-		</nav>
+		    <div class="header">
+		    	<div class="col-lg-8 offset-lg-2">
+		    	<!--<div class="home-container">-->
+		    		<div class="title"><b>Kohonen Self-Organising Maps</b></div>
+		    		<div class="subtitle">Pattern recognition and handwritting clustering using the <em>EMNIST</em> database</div>
+		    		<!--<div class="subsubtitle"></div>-->
+		    	</div>
+		    </div>
 
-	    <div class="header">
-	    	<div class="home-container">
-	    		<div class="title">Kohonen Self-Organising Maps</div>
-	    		<div class="subtitle">Pattern recognition and handwritting clustering using the <em>EMNIST</em> database</div>
-	    		<!--<div class="subsubtitle"></div>-->
-	    	</div>
-	    </div>
+		    <div class="main">
+			    <!--<img src="static/images/Net1.png" alt="BackgroundNet" height="1240" width="1754">-->
+			    <div class="col-lg-8 offset-lg-2">
+			    <!--<div class="home-container">-->
+				    	<div class="explanation">Kohonen's SOM is a type of artificial neural network that is trained using unsupervised learning to produce a low-dimensional, discretised representation of the input space of the training samples, called a map, and is therefore a method to do dimensionality reduction.</div>
+				    	<div class="canvas">
+							<canvas id="myCanvas" width="336" height="336"></canvas>
+							<!--<canvas id="myCanvas2" width="336" height="336"></canvas>-->
+						</div>
 
-	    <div class="main">
-	    	<div class="home-container">
-		    	<div class="explanation">A type of artificial neural network that is trained using unsupervised learning to produce a low-dimensional, discretised representation of the input space of the training samples, called a map, and is therefore a method to do dimensionality reduction</div>
-		    	<div class="canvas">
-					<canvas id="myCanvas" width="336" height="336"></canvas>
+						<div class="guide">
+							Draw in the box above to cluster.
+						</div>
+
+						<div id="reactiveInfo">
+							<form id="setupForm" style="text-align:center;">
+								<input type="button" class="btn btn-custom2 btn-sm" value="Grid" onclick="drawGrid()">
+								<input type="button" class="btn btn-custom btn-sm" value="Carry" onclick="carry()">
+								<input type="button" class="btn btn-custom3 btn-sm" value="Clear" onclick="clearCanvas(0)">
+								<a id="status"></a>
+							</form>
+						</div>
+
+						<div class="links">
+							<button type="button" class="btn btn-custom2 btn-lg">View Examples</button>
+							<button type="button" class="btn btn-custom btn-lg">Learn More</button>
+							<button type="button" class="btn btn-custom3 btn-lg"><a style="color:white" href="dataset">View Dataset</a></button>
+						</div>
 				</div>
+				<!--<div id="particles-js"></div>-->
+		    </div>
 
-				<div class="guide">
-					Draw in the box above to cluster.
-				</div>
+		    <div class="footer">
+		    	<div class="col-lg-8 offset-lg-2">
+		    	<!--<div class="home-container">-->
+		    		<div class="credits">Made by <a href="https://github.com/EklavyaFCB">Eklavya Sarkar</a></div>
+		    	</div>
+		    </div>
 
-				<div id="reactiveInfo">
-					<form id="setupForm" style="text-align:center;">
-						<input type="button" value="Submit" onclick="submit()">
-						<input type="button" value="Clear" onclick="clearCanvas(0)">
-						<a id="status"></a>
-					</form>
-				</div>
-
-				<div class="links">
-					<button type="button" class="btn btn-custom2 btn-lg">View Examples</button>
-					<button type="button" class="btn btn-custom btn-lg">Learn More</button>
-					<button type="button" class="btn btn-custom3 btn-lg"><a style="color:white" href="dataset">View Dataset</a></button>
-				</div>
-			</div>
-	    </div>
-
-	    <div class="footer">
-	    	<div class="home-container">
-	    		<div class="credits">Made by <a href="https://github.com/EklavyaFCB">Eklavya Sarkar</a></div>
-	    	</div>
-	    </div>
-
-	    <script src="static/js/draw.js" charset="UTF-8"></script>
+		    <script src="static/js/draw.js" charset="UTF-8"></script>
+		    <!--<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>-->
+		    <!--<script src="static/js/particleConfig.js"></script>-->
+		</div>
 	</body>
 </html>
