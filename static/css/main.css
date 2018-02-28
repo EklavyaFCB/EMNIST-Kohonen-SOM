@@ -22,6 +22,11 @@ body {
   /* background-color: #fff2e7; */
   /*font-family: 'Roboto', sans-serif;*/
   /*font-weight: 300;*/
+
+  background-image: url("/static/images/Net2.png");
+  background-repeat: repeat;
+  background-size: cover;
+
   background-color: #fff2e7;
   font-family: 'FuturaHandwritten';
   font-weight:normal;
@@ -30,7 +35,9 @@ body {
   margin:0;
   padding:0;
   height:100%;
+  min-height: 100%;
   overflow-x: hidden;
+  /*overflow-y: hidden;*/
 }
 
 /* fake bold */
@@ -39,11 +46,11 @@ b, strong{
 	text-shadow:1px 0 0 currentColor;
 }
 
-.backNet {
-  /*background-image: url("/static/images/Net2.png");*/
-  /*background-repeat: no-repeat, repeat;*/
-  /*background-size: contain;*/
-}
+/*.backNet {
+  background-image: url("/static/images/Net2.png");
+  background-repeat: no-repeat, repeat;
+  background-size: cover;
+}*/
 
 .home-container {
     margin: 0 auto;
@@ -58,11 +65,11 @@ b, strong{
 
 /* HEADER */
 
-.header, .footer {
-	font-family: 'FuturaHandwritten';
-    color: #fff;
-    background: #329894;
-    overflow: hidden;
+.header { /*, .footer {*/
+  font-family: 'FuturaHandwritten';
+  color: #fff;
+  background: #329894;
+  overflow: hidden;
 }
 
 .header {
@@ -90,12 +97,16 @@ b, strong{
 .main {
 	padding: 20px 0;
 	font-family: 'FuturaHandwritten';
-    min-height: 100%;
+  min-height: 100%;
 }
 
 .explanation {
   text-align: center;
   padding-bottom: 20px;
+}
+
+.canvas {
+  padding-top: 250px;
 }
 
 #myCanvas {
@@ -111,16 +122,16 @@ b, strong{
   margin: auto;
   background: #ffe4ce;
   border: 1px solid #000000;
-}*/
+}
 
 
 #particles-js { 
   background-color: #fff2e7;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover;*/
   /*background-position: 50% 50%;*/
-  display: block;
-}
+  /*display: block;
+}*/
 
 .guide {
   text-align: center;
@@ -138,15 +149,15 @@ b, strong{
 
 /* FOOTER */ 
 
-.footer {
+/*.footer {
     position: relative;
     left: 0;
     bottom: 0;
     width: 100%;
     padding: 30px 0;
-    font-size: 25px;
+    font-size: 25px;*/
     /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
-}
+/*}
 
 .credits {
   float: left;
@@ -155,4 +166,10 @@ b, strong{
 
 .credits a {
   color: white;
+}*/
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

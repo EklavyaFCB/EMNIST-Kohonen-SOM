@@ -4,106 +4,145 @@ ID:201135564,
 Username: u5es2
 -->
 
-<!DOCTYPE html>
-<html>
-
-	<!-- META -->
-	<meta charset="UTF-8"/>
-	<meta name="author" content="Eklavya Sarkar">
-	<meta name="ID" content="201135564">
-	<meta name="Date" content="2018-02-25" scheme="YYYY-MM-DD">
-
-    <!-- Bootstrap CSS -->
-    <link href="static/css/bootstrap/bootstrap.css" rel="stylesheet">
-
-    <!-- Main CSS -->
-    <link href="static/css/main.css" rel="stylesheet" type="text/css">
-
-	<!-- Cloud Bootstrap -->
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"> -->
-
-    <!-- jQuery -->
-    <script src="static/js/jQuery/jquery-3.2.1.js"></script>
-
-	<!-- Fonts -->
-	<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
-
-	<!-- Favicons -->
-	<link rel="apple-touch-icon" sizes="57x57" href="static/images/favicons/apple-icon-57x57.png">
-	<link rel="apple-touch-icon" sizes="60x60" href="static/images/favicons/apple-icon-60x60.png">
-	<link rel="apple-touch-icon" sizes="72x72" href="static/images/favicons/apple-icon-72x72.png">
-	<link rel="apple-touch-icon" sizes="76x76" href="static/images/favicons/apple-icon-76x76.png">
-	<link rel="apple-touch-icon" sizes="114x114" href="static/images/favicons/apple-icon-114x114.png">
-	<link rel="apple-touch-icon" sizes="120x120" href="static/images/favicons/apple-icon-120x120.png">
-	<link rel="apple-touch-icon" sizes="144x144" href="static/images/favicons/apple-icon-144x144.png">
-	<link rel="apple-touch-icon" sizes="152x152" href="static/images/favicons/apple-icon-152x152.png">
-	<link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-icon-180x180.png">
-	<link rel="icon" type="image/png" sizes="192x192"  href="static/images/favicons/android-icon-192x192.png">
-	<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
-	<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicons/favicon-96x96.png">
-	<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">
-
+<!doctype html>
+<html lang="en">
 	<head>
-		<title>Kohonen</title>
+		<!-- META -->
+		<meta charset="UTF-8"/>
+		<meta name="author" content="Eklavya Sarkar">
+		<meta name="ID" content="201135564">
+		<meta name="Date" content="2018-02-25" scheme="YYYY-MM-DD">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Cloud Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	    <!-- Manual Bootstrap CSS -->
+	    <!-- <link href="static/css/bootstrap/bootstrap.css" rel="stylesheet">-->
+
+	    <!-- Main CSS -->
+	    <link href="static/css/main.css" rel="stylesheet" type="text/css">
+
+		<!-- Fonts -->
+		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="57x57" href="static/images/favicons/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="static/images/favicons/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="static/images/favicons/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="static/images/favicons/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="static/images/favicons/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="static/images/favicons/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="static/images/favicons/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="static/images/favicons/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/favicons/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicons/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">
+
+		<title>Kohonen SOM</title>
 	</head>
 	<body onload="setUp();">
-		<div class="backNet">
-			<nav class="navbar fixed-top navbar-light" style="background-color: #2d8885;">
+
+		<div class="fixed-top">
+			<nav class="navbar fixed-top bg-success">
 			  <a class="nav-item nav-link active" a style="color:white" href="/">Home</a>
+			  <a class="nav-item" a style="color:white"><b>Kohonen Self-Organising Maps</b></a>
 			  <a class="nav-item nav-link" a style="color:white" href="about">About</a>
 			</nav>
+		</div>
 
-		    <div class="header">
+		    <!--<div class="header">
 		    	<div class="col-lg-8 offset-lg-2">
-		    	<!--<div class="home-container">-->
+		    	<div class="home-container">
 		    		<div class="title"><b>Kohonen Self-Organising Maps</b></div>
 		    		<div class="subtitle">Pattern recognition and handwritting clustering using the <em>EMNIST</em> database</div>
-		    		<!--<div class="subsubtitle"></div>-->
 		    	</div>
-		    </div>
+		    </div>-->
 
 		    <div class="main">
 			    <!--<img src="static/images/Net1.png" alt="BackgroundNet" height="1240" width="1754">-->
-			    <div class="col-lg-8 offset-lg-2">
-			    <!--<div class="home-container">-->
-				    	<div class="explanation">Kohonen's SOM is a type of artificial neural network that is trained using unsupervised learning to produce a low-dimensional, discretised representation of the input space of the training samples, called a map, and is therefore a method to do dimensionality reduction.</div>
-				    	<div class="canvas">
-							<canvas id="myCanvas" width="336" height="336"></canvas>
-							<!--<canvas id="myCanvas2" width="336" height="336"></canvas>-->
-						</div>
 
-						<div class="guide">
-							Draw in the box above to cluster.
-						</div>
+				    <div class="col-lg-8 offset-lg-2">
+				    <!--<div class="home-container">-->
+					    	<!--<div class="explanation">Kohonen's SOM is a type of artificial neural network that is trained using unsupervised learning to produce a low-dimensional, discretised representation of the input space of the training samples, called a map, and is therefore a method to do dimensionality reduction.</div>-->
+					    	<div class="canvas">
+								<canvas id="myCanvas" width="336" height="336"></canvas>
+								<!--<canvas id="myCanvas2" width="336" height="336"></canvas>-->
+							</div>
 
-						<div id="reactiveInfo">
-							<form id="setupForm" style="text-align:center;">
-								<input type="button" class="btn btn-custom2 btn-sm" value="Grid" onclick="drawGrid()">
-								<input type="button" class="btn btn-custom btn-sm" value="Carry" onclick="carry()">
-								<input type="button" class="btn btn-custom3 btn-sm" value="Clear" onclick="clearCanvas(0)">
-								<a id="status"></a>
-							</form>
-						</div>
+							<div class="guide">
+								Draw in the box above to cluster.
+							</div>
 
-						<div class="links">
-							<button type="button" class="btn btn-custom2 btn-lg">View Examples</button>
-							<button type="button" class="btn btn-custom btn-lg">Learn More</button>
-							<button type="button" class="btn btn-custom3 btn-lg"><a style="color:white" href="dataset">View Dataset</a></button>
-						</div>
-				</div>
+							<div id="reactiveInfo">
+								<form id="setupForm" style="text-align:center;">
+									<input type="button" class="btn btn-outline-info btn-sm" value="Grid" onclick="drawGrid()">
+									<input type="button" class="btn btn-outline-success btn-sm" value="Carry" onclick="carry()">
+									<input type="button" class="btn btn-outline-warning btn-sm" value="Clear" onclick="clearCanvas(0)">
+									<a id="status"></a>
+								</form>
+							</div>
+
+							<div class="links">
+								<button type="button" class="btn btn-info btn-lg">View Examples</button>
+								<button type="button" class="btn btn-success btn-lg">Learn More</button>
+								<button type="button" class="btn btn-warning btn-lg"><a style="color:white" href="dataset">View Dataset</a></button>
+							</div>
+					</div>
+
 				<!--<div id="particles-js"></div>-->
 		    </div>
 
-		    <div class="footer">
+			<!--<nav aria-label="Page navigation example">
+			  <ul class="pagination justify-content-center">
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Previous">
+			        <span aria-hidden="true">&laquo;</span>
+			        <span class="sr-only">Previous</span>
+			      </a>
+			    </li>
+			    <li class="page-item"><a class="page-link" href="#">1</a></li>
+			    <li class="page-item"><a class="page-link" href="#">2</a></li>
+			    <li class="page-item"><a class="page-link" href="#">3</a></li>
+			    <li class="page-item">
+			      <a class="page-link" href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			        <span class="sr-only">Next</span>
+			      </a>
+			    </li>
+			  </ul>
+			</nav>-->
+
+		    <!--<div class="footer">
 		    	<div class="col-lg-8 offset-lg-2">
-		    	<!--<div class="home-container">-->
 		    		<div class="credits">Made by <a href="https://github.com/EklavyaFCB">Eklavya Sarkar</a></div>
 		    	</div>
+		    </div>-->
+
+		    <div class="footer">
+		    	<div class="fixed-bottom">
+					<div class="progress">
+					  <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
 		    </div>
 
+		    <noscript>Your browser does not support JavaScript which is required by Bootstrap 4 for the purposes of this wep-page.</noscript>
 		    <script src="static/js/draw.js" charset="UTF-8"></script>
 		    <!--<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.js"></script>-->
 		    <!--<script src="static/js/particleConfig.js"></script>-->
-		</div>
+		    
+		    <!-- jQuery -->
+    		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    		<!-- Popper.js -->
+    		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    		<!-- Boostrap Javascript -->
+    		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	</body>
 </html>
