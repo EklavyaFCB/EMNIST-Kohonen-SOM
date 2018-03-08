@@ -7,15 +7,15 @@ Username: u5es2
 @font-face{
 	font-family: 'FuturaHandwritten';
 	font-style: normal;
-	src: url('/static/css/FuturaHandwritten.ttf') format('truetype');
+	src: url('../Fonts/Futura/FuturaHandwritten.ttf') format('truetype');
 }
 
 /* BODY */
 
 html {
-    height: 100%;
-    position: relative;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  height: 100%;
+  position: relative;
+  /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
 }
 
 body {
@@ -23,21 +23,28 @@ body {
   /*font-family: 'Roboto', sans-serif;*/
   /*font-weight: 300;*/
 
-  background-image: url("/static/images/Net2.png");
-  background-repeat: repeat;
+  margin:0;
+  padding:0;
+  height:100%;
+  min-height: 100%;
+
+  background-image: url("../images/Net4.png");
+  background-position: center;
   background-size: cover;
+  background-repeat: no-repeat;
+    -webkit-background-size:cover;
+    -moz-background-size:cover;
+    -o-background-size:cover;
 
   background-color: #fff2e7;
   font-family: 'FuturaHandwritten';
   font-weight:normal;
   font-style:normal;
   font-size: 20px;
-  margin:0;
-  padding:0;
-  height:100%;
-  min-height: 100%;
+
   overflow-x: hidden;
-  /*overflow-y: hidden;*/
+  overflow-y: hidden;
+  touch-action: pan-down;
 }
 
 /* fake bold */
@@ -50,13 +57,13 @@ b, strong{
   background-image: url("/static/images/Net2.png");
   background-repeat: no-repeat, repeat;
   background-size: cover;
-}*/
+}
 
 .home-container {
-    margin: 0 auto;
-    margin: 0 auto;
-    width: 800px;
-}
+  margin: 0 auto;
+  margin: 0 auto;
+  width: 800px;
+}*/
 
 /* NAV */
 .navbar {
@@ -73,10 +80,10 @@ b, strong{
 }
 
 .header {
-    padding-top: 70px;
-    padding-bottom: 10px;
-    top: 0;
-    width: 100%;
+  padding-top: 70px;
+  padding-bottom: 10px;
+  top: 0;
+  width: 100%;
 }
 
 .title {
@@ -86,10 +93,10 @@ b, strong{
 }
 
 .subtitle {
-    font-size: 25px;
-    font-weight: 300;
-    padding: 10px 0;
-    text-align: center;
+  font-size: 25px;
+  font-weight: 300;
+  padding: 10px 0;
+  text-align: center;
 }
 
 /* MAIN */
@@ -106,32 +113,28 @@ b, strong{
 }
 
 .canvas {
-  padding-top: 250px;
+  padding-top: 0px;
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 17.5%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
 }
 
 #myCanvas {
-  /*display:inline-block;*/
   display: block;
   margin: auto;
   background: #ffe4ce;
   border: 1px solid #000000;
 }
 
-/*#myCanvas2 {
-  display:inline-block;
+#myCanvas2 {
+  display: block;
   margin: auto;
   background: #ffe4ce;
   border: 1px solid #000000;
 }
-
-
-#particles-js { 
-  background-color: #fff2e7;
-  background-repeat: no-repeat;
-  background-size: cover;*/
-  /*background-position: 50% 50%;*/
-  /*display: block;
-}*/
 
 .guide {
   text-align: center;
@@ -150,13 +153,13 @@ b, strong{
 /* FOOTER */ 
 
 /*.footer {
-    position: relative;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 30px 0;
-    font-size: 25px;*/
-    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  padding: 30px 0;
+  font-size: 25px;*/
+  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
 /*}
 
 .credits {

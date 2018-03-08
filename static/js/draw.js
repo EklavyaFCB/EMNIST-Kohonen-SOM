@@ -8,60 +8,182 @@ Username: u5es2
 var drawable; // Boolean press marker
 var info; // Status string
 var ctx; // Canvas var
+
+var offsetL;
+var offsetT;
+
+var xArr = []; // Store x values
+var yArr = []; // Store y values
 var prev_X;
 var prev_Y;
+
 var rows = 28;
 var cols = 28;
 var size = 336; // Width and height of canvas
 var gridOn = true;
-var xArr = []; // Store x values
-var yArr = []; // Store y values
+
+var bgOST;
 
 // Functions
 
-// Trigger function
 function setUp() {
+
   // Elements
-  ctx = document.getElementById('myCanvas').getContext("2d");
-  // ctx2 = document.getElementById('myCanvas2').getContext("2d");
+  canvas = document.getElementById('myCanvas');
+  ctx = canvas.getContext('2d');
+
+  if (typeof ctx2 !== 'undefined') {
+    ctx2 = document.getElementById('myCanvas2').getContext('2d');
+  }
+
   info = document.getElementById('status');
   drawable = false;
   drawGrid();
   //drawTable();
 
+  audioSetUp();
+  //audioPlay();
+
+  /* --- MOUSE EVENTS --- */
   // Mouse button pressed
   $('#myCanvas').mousedown(function(e) {
     drawable = true;
-    info.innerHTML = "Drawing";
-    drawLine(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, false);
+    info.innerHTML = 'Drawing';
+
+    // Correct offsets because of bootstrap's col-lg-8 offset-lg-2
+    var offsetL = this.offsetLeft + $(this).parent().offset().left - 15;
+    var offsetT = this.offsetTop + $(this).parent().offset().top;
+
+    // drawLine(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, false);
+    drawLine(e.pageX - offsetL, e.pageY - offsetT, false);
   });
 
   // Mouse moves in canvas
   $('#myCanvas').mousemove(function(e) {
     if (drawable) {
-      info.innerHTML = "Drawing";
-      drawLine(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, true);
+      info.innerHTML = 'Drawing';
+
+      // Correct offsets because of bootstrap's col-lg-8 offset-lg-2
+      var offsetL = this.offsetLeft + $(this).parent().offset().left - 15;
+      var offsetT = this.offsetTop + $(this).parent().offset().top;
+
+      // drawLine(e.pageX - this.offsetLeft, e.pageY - this.offsetTop, false);
+      drawLine(e.pageX - offsetL, e.pageY - offsetT, true);
     }
   });
 
   // Mouse button released
   $('#myCanvas').mouseup(function(e) {
     drawable = false;
-    info.innerHTML = "Drawn";
+    info.innerHTML = 'Drawn';
   });
 
   // Mouse leaves the canvas
   $('#myCanvas').mouseleave(function(e) {
     drawable = false;
-    info.innerHTML = "Drawn";
+    info.innerHTML = 'Press submit to cluster';
+  });
+
+
+  /* --- TOUCH EVENTS --- */
+  
+  // Touch Start
+  canvas.addEventListener('touchstart', function (e) {
+    mousePos = getTouchPos(canvas, e);
+    var touch = e.touches[0];
+    var mouseEvent = new MouseEvent('mousedown', {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+  }, false);
+  
+  // Touch End
+  canvas.addEventListener('touchend', function (e) {
+    var mouseEvent = new MouseEvent('mouseup', {});
+    canvas.dispatchEvent(mouseEvent);
+  }, false);
+  
+  // Touch Move
+  canvas.addEventListener('touchmove', function (e) {
+    var touch = e.touches[0];
+    var mouseEvent = new MouseEvent('mousemove', {
+      clientX: touch.clientX,
+      clientY: touch.clientY
+    });
+    canvas.dispatchEvent(mouseEvent);
+  }, false);
+
+  // Get the position of a touch relative to the canvas
+  function getTouchPos(canvasDom, touchEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: touchEvent.touches[0].clientX - rect.left,
+      y: touchEvent.touches[0].clientY - rect.top
+    };
+  }
+
+  /* --- SCROLL EVENTS --- */
+
+  // Prevent unintended touch scroll
+  document.body.addEventListener("touchstart", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+
+  document.body.addEventListener("touchend", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+
+  document.body.addEventListener("touchmove", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  }, false);
+
+}
+
+// Set up audio
+function audioSetUp() {
+  bgOST = new Howl({
+    src: ['static/sounds/OST/FastDrawing.mp3'],
+    autoplay: false,
+    loop: false,
+    volume: 0.5
+  });
+}
+
+function audioPlay() {
+  // Clear listener after first call.
+  bgOST.once('load', function(){
+    bgOST.play();
+  });
+
+  // Fires when the sound finishes playing.
+  bgOST.on('end', function(){
+    console.log('Finished playing!');
   });
 }
 
 // Clear canvas
 function clearCanvas(callType) {
   
-  ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
-  ctx2.clearRect(0, 0, myCanvas.width, myCanvas.height);
+  //ctx.clearRect(0, 0, myCanvas.width, myCanvas.height);
+
+  // Apparently the best to clear the canvas is not by 
+  // clearing a rectangle of a certain width and height
+  // but by re-defining the values.
+
+  canvas.width = canvas.width;
+  
+  if (typeof ctx2 !== 'undefined') {
+    //ctx2.clearRect(0, 0, myCanvas.width, myCanvas.height);
+    canvas.width = canvas.width;
+  }
+
   xArr = [];
   yArr = [];
   
@@ -120,8 +242,8 @@ function drawGrid() {
       ctx.lineWidth = 0;
     }
 
-    ctx.closePath(); 
-    ctx.stroke()
+    ctx.closePath();
+    ctx.stroke();
 
     gridOn = !gridOn;
   
@@ -133,14 +255,13 @@ function reDraw() {
   ctx2.lineJoin = "round";
   ctx2.lineWidth = 20;
 
-  ctx2.beginPath();
-  ctx2.moveTo(xArr[0], yArr[0]);
-  for (var i=0; i<(xArr.length); i++) {
+  for (var i=0; i<xArr.length; i++) {
+    ctx2.beginPath();
+    ctx2.moveTo(xArr[i-1], yArr[i-1]);
     ctx2.lineTo(xArr[i],yArr[i]);
-    console.log(xArr[i],yArr[i])
+    ctx2.closePath();
+    ctx2.stroke();
   }
-  ctx2.stroke();
-  ctx2.closePath(); 
 }
 
 /*function drawTable() {
@@ -162,5 +283,7 @@ function reDraw() {
 // Submit input
 function carry() {
   info.innerHTML = "Submitted";
-  //reDraw();
+  if (typeof ctx2 !== 'undefined') {
+    reDraw();
+  }
 }
