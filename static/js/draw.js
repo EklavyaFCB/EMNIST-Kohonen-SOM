@@ -4,7 +4,9 @@ ID:201135564,
 Username: u5es2
 */
 
-// Variables
+//----------------------------------------------------------------------------------------
+// VARIABLES
+//----------------------------------------------------------------------------------------
 var drawable; // Boolean press marker
 var info; // Status string
 var ctx; // Canvas var
@@ -14,6 +16,7 @@ var offsetT;
 
 var xArr = []; // Store x values
 var yArr = []; // Store y values
+var coordinates = []; // Store X,Y values
 var prev_X;
 var prev_Y;
 
@@ -21,34 +24,106 @@ var rows = 28;
 var cols = 28;
 var size = 336; // Width and height of canvas
 var gridOn = true;
-
+var muted = true;
+var initial = true;
 var bgOST;
 
-// Functions
+//----------------------------------------------------------------------------------------
+// SET-UPS
+//----------------------------------------------------------------------------------------
 
 function setUp() {
 
   // Elements
+  volIcon = document.getElementById("volIcon");
+  currText = document.getElementById("intro");
+  //intButton = document.getElementById("introButton");
+
+  // Call Set-up methods
+  audioSetUp();
+  //audioPlay();
+}
+
+function setUpCanvas() {
+  
+  info = document.getElementById('status');
   canvas = document.getElementById('myCanvas');
   ctx = canvas.getContext('2d');
+  drawable = false;
+  drawGrid();
 
+  // If there is Canvas2 on the page
   if (typeof ctx2 !== 'undefined') {
     ctx2 = document.getElementById('myCanvas2').getContext('2d');
   }
 
-  info = document.getElementById('status');
-  drawable = false;
-  drawGrid();
-  //drawTable();
+  // Calls
+  setUpMouseCanvas();
+  setUpTouchCanvas();
+  setUpScrollEvents();
+}
 
-  audioSetUp();
-  //audioPlay();
+//----------------------------------------------------------------------------------------
+// AUDIO
+//----------------------------------------------------------------------------------------
 
+// Set up audio
+function audioSetUp() {
+  bgOST = new Howl({
+    src: ['static/sounds/OST/FastDrawing.mp3'],
+    autoplay: false,
+    loop: true,
+    volume: 0.5
+  });
+
+}
+
+function audioPlay() {
+  // Clear listener after first call.
+  bgOST.once('load', function(){
+    bgOST.play();
+  });
+
+  // Fires when the sound finishes playing.
+  bgOST.on('end', function(){
+    console.log('Finished playing!')
+  });
+}
+
+// Change volume icon to mute/unmute
+function changeVol() {
+
+  console.log("bgOST: " + bgOST);
+
+  if (muted) { // Turning sound ON
+    volIcon.src = "static/images/volume/shadow/3.png";
+    if (initial) {
+      bgOST.play();
+      //console.log("Start playing");
+      initial = !initial;
+    } else {
+      bgOST.mute(false);
+      //console.log("Resume playing");
+    }
+    
+  } else { // Turning sound OFF
+    volIcon.src = "static/images/volume/shadow/1.png";
+    bgOST.mute(true);
+    //console.log("Stop playing");
+  }
+
+  muted = !muted;
+}
+
+//----------------------------------------------------------------------------------------
+// CANVAS
+//----------------------------------------------------------------------------------------
+function setUpMouseCanvas() {
   /* --- MOUSE EVENTS --- */
   // Mouse button pressed
   $('#myCanvas').mousedown(function(e) {
     drawable = true;
-    info.innerHTML = 'Drawing';
+    info.textContent = 'Drawing';
 
     // Correct offsets because of bootstrap's col-lg-8 offset-lg-2
     var offsetL = this.offsetLeft + $(this).parent().offset().left - 15;
@@ -61,7 +136,7 @@ function setUp() {
   // Mouse moves in canvas
   $('#myCanvas').mousemove(function(e) {
     if (drawable) {
-      info.innerHTML = 'Drawing';
+      info.textContent = 'Drawing';
 
       // Correct offsets because of bootstrap's col-lg-8 offset-lg-2
       var offsetL = this.offsetLeft + $(this).parent().offset().left - 15;
@@ -75,16 +150,18 @@ function setUp() {
   // Mouse button released
   $('#myCanvas').mouseup(function(e) {
     drawable = false;
-    info.innerHTML = 'Drawn';
+    info.textContent = 'Drawn';
   });
 
   // Mouse leaves the canvas
   $('#myCanvas').mouseleave(function(e) {
     drawable = false;
-    info.innerHTML = 'Press submit to cluster';
+    info.textContent = 'Press submit to cluster';
   });
+}
 
 
+function setUpTouchCanvas() {
   /* --- TOUCH EVENTS --- */
   
   // Touch Start
@@ -122,7 +199,9 @@ function setUp() {
       y: touchEvent.touches[0].clientY - rect.top
     };
   }
+}
 
+function setUpScrollEvents() {
   /* --- SCROLL EVENTS --- */
 
   // Prevent unintended touch scroll
@@ -143,29 +222,6 @@ function setUp() {
       e.preventDefault();
     }
   }, false);
-
-}
-
-// Set up audio
-function audioSetUp() {
-  bgOST = new Howl({
-    src: ['static/sounds/OST/FastDrawing.mp3'],
-    autoplay: false,
-    loop: false,
-    volume: 0.5
-  });
-}
-
-function audioPlay() {
-  // Clear listener after first call.
-  bgOST.once('load', function(){
-    bgOST.play();
-  });
-
-  // Fires when the sound finishes playing.
-  bgOST.on('end', function(){
-    console.log('Finished playing!');
-  });
 }
 
 // Clear canvas
@@ -188,7 +244,7 @@ function clearCanvas(callType) {
   yArr = [];
   
   if (callType==0) {
-    info.innerHTML = "Cleared";
+    info.textContent = "Cleared";
   }
 
   if (gridOn) {
@@ -196,6 +252,10 @@ function clearCanvas(callType) {
   }
 
 }
+
+//----------------------------------------------------------------------------------------
+// CTX
+//----------------------------------------------------------------------------------------
 
 // Draw the recorded data
 function drawLine(x, y, isDown) {
@@ -217,6 +277,7 @@ function drawLine(x, y, isDown) {
 
   xArr.push(prev_X);
   yArr.push(prev_Y);
+  coordinates.push(prev_X, prev_Y);
 
 }
 
@@ -282,8 +343,30 @@ function reDraw() {
 
 // Submit input
 function carry() {
-  info.innerHTML = "Submitted";
+  info.textContent = "Submitted";
+  console.log("Carry");
+  console.log("xArr:" + xArr);
+  console.log(coordinates);
   if (typeof ctx2 !== 'undefined') {
-    reDraw();
+    //reDraw();
   }
 }
+
+// Fade in 
+function loadFade() {
+  $(document).ready(function(){
+      //$("button").click(function(){
+          $(".explanation1").fadeIn(300000);
+          console.log("Fading");
+      //});
+  });
+}
+
+// Change Text
+function changeText() {
+  nextText = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning visual or audible patterns.";
+  currText.textContent = nextText;
+
+  //intButton.className = "btn btn-outline-danger btn-sm";
+}
+
