@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 #import som
+#import RGB
 
 app = Flask(__name__)
  
@@ -20,9 +21,17 @@ def about():
 def one():
     return render_template('1.html')
 
-@app.route('/1_2')
-def oneTwo():
-    return render_template('1_2.html')
+@app.route('/cards1')
+def cards1():
+    return render_template('cards1.html')
+
+@app.route('/cards2')
+def cards2():
+    return render_template('cards2.html')
+
+@app.route('/cards3')
+def cards3():
+    return render_template('cards3.html')
 
 @app.route('/1_3')
 def oneThree():
@@ -40,13 +49,13 @@ def oneFive():
 def two():
     return render_template('2.html')
 
+@app.route('/2_5')
+def twoFive():
+    return render_template('2_5.html')
+
 @app.route('/3')
 def three():
     return render_template('3.html')
-
-    #bmuTrain, radiusTrain, rateTrain, sqDistTrain = trainSOM(inputs, n_iterations, time_constant)
-    #bmuTest, radiusTest, rateTest, sqDistTest = trainSOM(testInputs, n_iterations_test, time_constant_test)
-    #makeSOM(bmuTrain, labels, bmuTest, testLabels)
 
 if __name__ == "__main__":
     app.run(debug=True)

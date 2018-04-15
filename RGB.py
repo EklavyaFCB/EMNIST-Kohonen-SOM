@@ -10,26 +10,31 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#----------------------------------------------------------------------------------------
+# CONFIG
+#----------------------------------------------------------------------------------------
+
 # Argument Parser for debugging
 parser = argparse.ArgumentParser(description='Make a 2D map of a multidimensional input')
 parser.add_argument('-d','--debug', action='store_true', default=False, help='Print debug messages to stderr')
 args = parser.parse_args()
 
-def setUp():
-	#----------------------------------------------------------------------------------------
-	# CONFIG
-	#----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
+# SET-UP
+#----------------------------------------------------------------------------------------
+
+def setUp(n_iterations):
+
+	# Global variables
+	global n_classes, INPUTS_PER_CLASS, n, m, net, data, inputs
+	global network_dimensions, init_radius, init_learning_rate, time_constant
 
 	# Constants
 	# ======== DO NOT CHANGE ========|
 	INPUTS_MAX_VALUE = 255			#|
 	MAX_CLASSES = 10				#|
-	INPUTS_PER_CLASS = 10000		#|
-	# =========DO NOT CHANGE ========|
-
-	#----------------------------------------------------------------------------------------
-	# SET-UP
-	#----------------------------------------------------------------------------------------
+	INPUTS_PER_CLASS = n_iterations	#|
+	# =========DO NOT CHANG==========|
 
 	if args.debug:
 		print("Debug mode ON")
@@ -54,7 +59,7 @@ def setUp():
 	network_dimensions = np.array([n_classes*2,n_classes*2])
 
 	n_iterations = n
-	init_learning_rate = 1
+	init_learning_rate = 0.3
 
 	if args.debug:
 		print('n_classes:', n_classes)
@@ -79,6 +84,8 @@ def setUp():
 		print('Net', type(net))
 		print('Initial Radius', init_radius)
 		print('Time constant', time_constant)
+
+	return inputs
 
 #----------------------------------------------------------------------------------------
 # METHODS
@@ -317,10 +324,10 @@ def makeSOM(bmu_idx_arr):
 	clusteredNoise[:,1] = yPlotNoise[:]
 	clusteredNoise[:,2:5] = data[:]
 	
-	np.savetxt(('static/data/RGBUnsorted.csv'), unClustered, fmt='%d', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
-	np.savetxt(('static/data/RGBUnsortedNoise.csv'), unClusteredNoise, fmt='%.3f', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
-	np.savetxt(('static/data/RGBSorted.csv'), clustered, fmt='%d', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
-	np.savetxt(('static/data/RGBSortedNoise.csv'), clusteredNoise, fmt='%.3f', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
+	np.savetxt(('static/data/RGB/RGBUnsorted.csv'), unClustered, fmt='%d', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
+	np.savetxt(('static/data/RGB/RGBUnsortedNoise.csv'), unClusteredNoise, fmt='%.3f', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
+	np.savetxt(('static/data/RGB/RGBSorted.csv'), clustered, fmt='%d', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
+	np.savetxt(('static/data/RGB/RGBSortedNoise.csv'), clusteredNoise, fmt='%.3f', delimiter=',', comments='', header='xRGB,yRGB,R,G,B')
 
 	if args.debug:
 		print('Saved unsorted coordinates')
@@ -352,7 +359,8 @@ def plotVariables(radius, learnRate, sqDist):
 	plt.plot(sqDist, 'r')
 	plt.show()
 
-setUp()
-bmu, radius, rate, sqDist = trainSOM(inputs, n_iterations)
+
+inputs = setUp(60000)
+bmu, radius, rate, sqDist = trainSOM(inputs, 60000)
 makeSOM(bmu)
 plotVariables(radius, rate, sqDist)

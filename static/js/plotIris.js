@@ -42,22 +42,22 @@ var svg2_2 = d3.select("#chartContent2_2").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Unsorted graph
-d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
+d3.csv("/static/data/Iris/IrisUnsorted.csv").then(function(data) {
 
     // Read as ints not strings
-    trainData.forEach(function(d) {
-      d.xRGB = +d.xRGB;
-      d.yRGB = +d.yRGB;
+    data.forEach(function(d) {
+      d.xIris = +d.xIris;
+      d.yIris = +d.yIris;
       d.R = +d.R
       d.G = +d.G;
       d.B = +d.B;
     });
 
-    console.log(trainData);
+    console.log(data);
 
     // Define domains of x and y axis
-    x.domain(d3.extent(trainData, function(d) { return d.xRGB; })).nice();
-    y.domain(d3.extent(trainData, function(d) { return d.yRGB; })).nice();
+    x.domain(d3.extent(data, function(d) { return d.xIris; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.yIris; })).nice();
 
     // Draw
     // X-axis
@@ -85,12 +85,12 @@ d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
         .style("text-anchor", "end")*/
 
     svg1_1.selectAll(".dot")
-        .data(trainData)
+        .data(data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d.xRGB); })
-        .attr("cy", function(d) { return y(d.yRGB); })
+        .attr("cx", function(d) { return x(d.xIris); })
+        .attr("cy", function(d) { return y(d.yIris); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 
    /* var legend = svg.selectAll(".legend")
@@ -115,22 +115,22 @@ d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
   });
 
 // Unsorted with noise
-d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
+d3.csv("/static/data/Iris/IrisUnsortedNoise.csv").then(function(data) {
 
     // Read as ints not strings
-    trainData.forEach(function(d) {
-      d.xRGB = +d.xRGB;
-      d.yRGB = +d.yRGB;
+    data.forEach(function(d) {
+      d.xIris = +d.xIris;
+      d.yIris = +d.yIris;
       d.R = +d.R
       d.G = +d.G;
       d.B = +d.B;
     });
 
-    console.log(trainData);
+    console.log(data);
 
     // Define domains of x and y axis
-    x.domain(d3.extent(trainData, function(d) { return d.xRGB; })).nice();
-    y.domain(d3.extent(trainData, function(d) { return d.yRGB; })).nice();
+    x.domain(d3.extent(data, function(d) { return d.xIris; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.yIris; })).nice();
 
     // Draw
     // X-axis
@@ -158,12 +158,12 @@ d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
         .style("text-anchor", "end")*/
 
     svg1_2.selectAll(".dot")
-        .data(trainData)
+        .data(data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d.xRGB); })
-        .attr("cy", function(d) { return y(d.yRGB); })
+        .attr("cx", function(d) { return x(d.xIris); })
+        .attr("cy", function(d) { return y(d.yIris); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 
    /* var legend = svg.selectAll(".legend")
@@ -188,20 +188,20 @@ d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
   });
 
 // Sorted without noise
-d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
-  console.log(testData);
+d3.csv("/static/data/Iris/IrisSorted.csv").then(function(data) {
+  console.log(data);
 
-  testData.forEach(function(d) {
-    d.xRGB = +d.xRGB;
-    d.yRGB = +d.yRGB;
+  data.forEach(function(d) {
+    d.xIris = +d.xIris;
+    d.yIris = +d.yIris;
     d.R = +d.R
     d.G = +d.G;
     d.B = +d.B;
   });
 
   // Define domains of x and y axis
-  x.domain(d3.extent(testData, function(d) { return d.xRGB; })).nice();
-  y.domain(d3.extent(testData, function(d) { return d.yRGB; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.xIris; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.yIris; })).nice();
 
   // Draw
   // X-axis
@@ -229,30 +229,30 @@ d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
       .style("text-anchor", "end")*/
 
   svg2_1.selectAll(".dot")
-        .data(testData)
+        .data(data)
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.xRGB); })
-      .attr("cy", function(d) { return y(d.yRGB); })
+      .attr("cx", function(d) { return x(d.xIris); })
+      .attr("cy", function(d) { return y(d.yIris); })
       .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 });
 
 // Sorted with noise
-d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(testData) {
-  console.log(testData);
+d3.csv("/static/data/Iris/IrisSortedNoise.csv").then(function(data) {
+  console.log(data);
 
-  testData.forEach(function(d) {
-    d.xRGB = +d.xRGB;
-    d.yRGB = +d.yRGB;
+  data.forEach(function(d) {
+    d.xIris = +d.xIris;
+    d.yIris = +d.yIris;
     d.R = +d.R
     d.G = +d.G;
     d.B = +d.B;
   });
 
   // Define domains of x and y axis
-  x.domain(d3.extent(testData, function(d) { return d.xRGB; })).nice();
-  y.domain(d3.extent(testData, function(d) { return d.yRGB; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.xIris; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.yIris; })).nice();
 
   // Draw
   // X-axis
@@ -280,11 +280,11 @@ d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(testData) {
       .style("text-anchor", "end")*/
 
   svg2_2.selectAll(".dot")
-        .data(testData)
+        .data(data)
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.xRGB); })
-      .attr("cy", function(d) { return y(d.yRGB); })
+      .attr("cx", function(d) { return x(d.xIris); })
+      .attr("cy", function(d) { return y(d.yIris); })
       .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 });

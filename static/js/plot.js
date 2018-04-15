@@ -1,9 +1,13 @@
-// Margins
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+//----------------------------------------------------------------------------------------
+// MARGINS
+//----------------------------------------------------------------------------------------
+var margin = {top: 20, right: 10, bottom: 20, left: 15},
+    width = 200 - margin.left - margin.right,
+    height = 200 - margin.top - margin.bottom;
 
-// Axis
+//----------------------------------------------------------------------------------------
+// AXIS
+//----------------------------------------------------------------------------------------
 var x = d3.scaleLinear()
     .range([0, width]);
 
@@ -18,31 +22,111 @@ var xAxis = d3.axisBottom()
 var yAxis = d3.axisLeft()
     .scale(y);
 
-// Adding to HTML
-var svg = d3.select("#chartContent").append("svg")
+//----------------------------------------------------------------------------------------
+// ADD TO HTML
+//
+// TOP ROW
+//----------------------------------------------------------------------------------------
+var svg1_1 = d3.select("#chartContent1_1").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// Read .csv
-d3.csv("/static/data/TrainCoordinates.csv").then(function(trainData) {
+var svg2_1 = d3.select("#chartContent2_1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg3_1 = d3.select("#chartContent3_1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg4_1 = d3.select("#chartContent4_1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg5_1 = d3.select("#chartContent5_1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg6_1 = d3.select("#chartContent6_1").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//----------------------------------------------------------------------------------------
+// BOTTOM ROW
+//----------------------------------------------------------------------------------------
+var svg1_2 = d3.select("#chartContent1_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg2_2 = d3.select("#chartContent2_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg3_2 = d3.select("#chartContent3_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg4_2 = d3.select("#chartContent4_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg5_2 = d3.select("#chartContent5_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+var svg6_2 = d3.select("#chartContent6_2").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+//----------------------------------------------------------------------------------------
+// READ CSV
+//
+// TOP ROW
+//----------------------------------------------------------------------------------------
+d3.csv("/static/data/OCR/RandTrain.csv").then(function(data) {
 
     // Read as ints not strings
-   trainData.forEach(function(d) {
-      d.xTrain = +d.xTrain;
-      d.yTrain = +d.yTrain;
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
     });
 
-   console.log(trainData);
+   console.log(data);
 
     // Define domains of x and y axis
-    x.domain(d3.extent(trainData, function(d) { return d.xTrain; })).nice();
-    y.domain(d3.extent(trainData, function(d) { return d.yTrain; })).nice();
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
 
     // Draw
     // X-axis
-    svg.append("g")
+    svg1_1.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis)
@@ -53,7 +137,7 @@ d3.csv("/static/data/TrainCoordinates.csv").then(function(trainData) {
         .style("text-anchor", "end")
 
     // Y-axis
-    svg.append("g")
+    svg1_1.append("g")
         .attr("class", "y axis")
         .call(yAxis)
       .append("text")
@@ -63,54 +147,577 @@ d3.csv("/static/data/TrainCoordinates.csv").then(function(trainData) {
         .attr("dy", ".71em")
         .style("text-anchor", "end")
 
-    // Each datapoint is a circle - represented by r, cx, cy
-    var color = d3.scaleOrdinal(d3.schemeCategory10);
-
-    svg.selectAll(".dot")
-        .data(trainData)
+    svg1_1.selectAll(".dot")
+        .data(data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
-        .attr("cx", function(d) { return x(d.xTrain); })
-        .attr("cy", function(d) { return y(d.yTrain); })
-        .style("fill", d3.color("blue"))
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 
-   /* var legend = svg.selectAll(".legend")
-        .data(color.domain())
-      .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+});
 
-    legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
+d3.csv("/static/data/OCR/Train.csv").then(function(data) {
 
-    legend.append("text")
-        .attr("x", width - 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg2_1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
         .style("text-anchor", "end")
-        .text(function(d) { return d; });*/
 
-  });
+    // Y-axis
+    svg2_1.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
 
-d3.csv("/static/data/TestCoordinates.csv").then(function(testData) {
-  console.log(testData);
+    svg2_1.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
 
-  testData.forEach(function(d) {
-    d.xTest = +d.xTest;
-    d.yTest = +d.yTest;
-  });
+});
 
-  svg.selectAll(".dot")
-        .data(testData)
-    .enter().append("circle")
-      .attr("class", "dot")
-      .attr("r", 3.5)
-      .attr("cx", function(d) { return x(d.xTest); })
-      .attr("cy", function(d) { return y(d.yTest); })
-      .style("fill", d3.color("green"))
-      console.log("YOLO");
+d3.csv("/static/data/OCR/RandTest.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg3_1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg3_1.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg3_1.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/Test.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg4_1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg4_1.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg4_1.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/RandCombined.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg5_1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg5_1.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg5_1.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/Combined.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg6_1.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg6_1.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg6_1.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+//----------------------------------------------------------------------------------------
+// BOTTOM ROW
+//----------------------------------------------------------------------------------------
+d3.csv("/static/data/OCR/RandTrainNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg1_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg1_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg1_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/TrainNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg2_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg2_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg2_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/RandTestNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg3_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg3_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg3_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/TestNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg4_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg4_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg4_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/RandCombinedNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg5_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg5_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg5_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
+});
+
+d3.csv("/static/data/OCR/CombinedNoise.csv").then(function(data) {
+
+    // Read as ints not strings
+   data.forEach(function(d) {
+      d.xSOM = +d.xSOM;
+      d.ySOM = +d.ySOM;
+      d.R = +d.R
+      d.G = +d.G;
+      d.B = +d.B;
+    });
+
+   console.log(data);
+
+    // Define domains of x and y axis
+    x.domain(d3.extent(data, function(d) { return d.xSOM; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.ySOM; })).nice();
+
+    // Draw
+    // X-axis
+    svg6_2.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("x", width)
+        .attr("y", -6)
+        .style("text-anchor", "end")
+
+    // Y-axis
+    svg6_2.append("g")
+        .attr("class", "y axis")
+        .call(yAxis)
+      .append("text")
+        .attr("class", "label")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 6)
+        .attr("dy", ".71em")
+        .style("text-anchor", "end")
+
+    svg6_2.selectAll(".dot")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", function(d) { return x(d.xSOM); })
+        .attr("cy", function(d) { return y(d.ySOM); })
+        .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+
 });
