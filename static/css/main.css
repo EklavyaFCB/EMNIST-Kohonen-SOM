@@ -66,6 +66,29 @@ b, strong{
   background-image:none
 }
 
+/* D3.js */
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+    stroke: none;
+}
+
+.tooltip {
+    font-family: 'FuturaHandwritten';
+    position: absolute;
+    font-size: 12px;
+    width:  auto;
+    height: auto;
+    pointer-events: none;
+    background-color: white;
+}
+
 /*.backNet {
   background-image: url("/static/images/Net2.png");
   background-repeat: no-repeat, repeat;

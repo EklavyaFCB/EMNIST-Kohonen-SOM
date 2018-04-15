@@ -67,9 +67,8 @@ Username: u5es2
 			    <div class="col-lg-8 offset-lg-2">
 
 			    	<div id="intro" class="explanation1">
-			    		Humans and animals are fundamentally capable of <b class="text-info">pattern recognition</b>, having been <b class="text-info">trained</b> since birth to be able to innately identify and respond to them.
-			    		<br><br>
-			    		This allows us to communicate and interact in many different biological ways, thanks to the brain intricate ability to constantly <b class="text-info">learn</b>.
+			    		<p id="para1">Humans and animals are fundamentally capable of <b class="text-info">pattern recognition</b>, having been <b class="text-info">trained</b> since birth to be able to innately identify and respond to them.</p>
+			    		<p id="para2">This allows us to communicate and interact in many different biological ways, thanks to the brain's intricate ability to constantly <b class="text-info">learn</b>.</p>
 			    	</div>
 
 					<div id="reactiveInfo">
@@ -106,14 +105,17 @@ Username: u5es2
     		<script>
     			// Elements
 				var n_iterations = 0;
+				var currText = document.getElementById("intro");
+				var currPara1 = document.getElementById("para1");
+				var currPara2 = document.getElementById("para2");
 
 				// Methods
 				function iterate() {
 
 					if (n_iterations==0) {
 						// Update text
-						nextText = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning visual or audible patterns.";
-						currText.textContent = nextText;
+						currPara1.textContent = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning patterns.";
+						currPara2.textContent = "Teuvo Kohonen's algorithm allows computers to discern patterns and sort them according to inputs, without understanding the sum of what they represent.";
 					} else if (n_iterations==1) {
 						// Update page
 						location.href = "cards1";

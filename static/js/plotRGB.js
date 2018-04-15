@@ -1,6 +1,6 @@
 // Margins
 var margin = {top: 20, right: 10, bottom: 20, left: 15},
-    width = 600 - margin.left - margin.right,
+    width = 300 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
 // Axis

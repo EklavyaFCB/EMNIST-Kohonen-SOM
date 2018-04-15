@@ -385,11 +385,11 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	y_coordsTest = []
 
 	# Fill
-	x_coords = np.random.randint(0, n_classes-1, chosen_inputs_per_class*n_classes)
-	y_coords = np.random.randint(0, n_classes-1, chosen_inputs_per_class*n_classes)
+	x_coords = np.random.randint(0, n_classes*2, chosen_inputs_per_class*n_classes)
+	y_coords = np.random.randint(0, n_classes*2, chosen_inputs_per_class*n_classes)
 
-	x_coordsTest = np.random.randint(0, n_classes-1, chosen_test_inputs_per_class*n_classes)
-	y_coordsTest = np.random.randint(0, n_classes-1, chosen_test_inputs_per_class*n_classes)
+	x_coordsTest = np.random.randint(0, n_classes*2, chosen_test_inputs_per_class*n_classes)
+	y_coordsTest = np.random.randint(0, n_classes*2, chosen_test_inputs_per_class*n_classes)
 
 	# Convert
 	x_coords = np.array(x_coords)
@@ -525,7 +525,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 
 	# Plot test random nodes without noise
 	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot_test)
-	plt.title(str(n)+' test inputs unsorted without noise')
+	plt.title(str(n_test)+' test inputs unsorted without noise')
 	plt.show()
 
 	# Plot train and test random nodes without noise
@@ -544,14 +544,14 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	plt.show()
 
 	# Plot test random nodes with noise
-	plt.scatter(x_coordsTestNoise, y_coordsTestNoise, s=20, marker='x', facecolor=zPlot)
-	plt.title(str(n)+' test inputs unsorted with noise')
+	plt.scatter(x_coordsTestNoise, y_coordsTestNoise, s=20, marker='x', facecolor=zPlot_test)
+	plt.title(str(n_test)+' test inputs unsorted with noise')
 	plt.show()
 
 	# Plot train and test random nodes with noise
 	plt.scatter(x_coordsNoise, y_coordsNoise, s=20, marker='o', facecolor=zPlot)
 	plt.scatter(x_coordsTestNoise, y_coordsTestNoise, s=20, marker='x', facecolor=zPlot)
-	plt.title(str(n)+' train and test inputs unsorted with noise')
+	plt.title(str(n+n_test)+' train and test inputs unsorted with noise')
 	plt.show()
 
 	#-----------------------------------------------------------------------------------
@@ -565,13 +565,13 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 
 	# Plot test data without noise
 	plt.scatter(xPlotTest, yPlotTest, s=20, marker='x', facecolor=zPlot_test)
-	plt.title(str(n)+' test inputs sorted without noise')
+	plt.title(str(n_test)+' test inputs sorted without noise')
 	plt.show()
 
 	# Plot both train and test data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
 	plt.scatter(xPlotTest, yPlotTest, s=20, marker='x', facecolor=zPlot_test)
-	plt.title(str(n)+' train and test inputs sorted without noise')
+	plt.title(str(n+n_test)+' train and test inputs sorted without noise')
 	plt.show()
 
 	#-----------------------------------------------------------------------------------

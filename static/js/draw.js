@@ -36,7 +36,7 @@ function setUp() {
 
   // Elements
   volIcon = document.getElementById("volIcon");
-  currText = document.getElementById("intro");
+  //currText = document.getElementById("intro");
   //intButton = document.getElementById("introButton");
 
   // Call Set-up methods
