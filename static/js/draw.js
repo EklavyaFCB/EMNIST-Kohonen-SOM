@@ -61,6 +61,8 @@ function setUpCanvas() {
   setUpMouseCanvas();
   setUpTouchCanvas();
   setUpScrollEvents();
+  setUpSliders();
+
 }
 
 //----------------------------------------------------------------------------------------
@@ -361,12 +363,3 @@ function loadFade() {
       //});
   });
 }
-
-// Change Text
-function changeText() {
-  nextText = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning visual or audible patterns.";
-  currText.textContent = nextText;
-
-  //intButton.className = "btn btn-outline-danger btn-sm";
-}
-

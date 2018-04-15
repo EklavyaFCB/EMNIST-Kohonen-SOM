@@ -1,0 +1,293 @@
+<!--
+Name: Eklavya SARKAR, 
+ID:201135564, 
+Username: u5es2
+-->
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- META -->
+		<meta charset="UTF-8"/>
+		<meta name="author" content="Eklavya Sarkar">
+		<meta name="ID" content="201135564">
+		<meta name="Date" content="2018-02-25" scheme="YYYY-MM-DD">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Cloud Bootstrap CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	    <!-- Manual Bootstrap CSS -->
+	    <!-- <link href="static/css/bootstrap/bootstrap.css" rel="stylesheet">-->
+
+	    <!-- Slick CSS -->
+	    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/> -->
+
+	    <!-- Main CSS -->
+	    <link href="static/css/main.css" rel="stylesheet" type="text/css">
+
+		<!-- Fonts -->
+		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
+
+		<!-- Favicons -->
+		<link rel="apple-touch-icon" sizes="57x57" href="static/images/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="static/images/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="static/images/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="static/images/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="static/images/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="static/images/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="static/images/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="static/images/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="static/images/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon-16x16.png">
+
+		<title>Kohonen SOM</title>
+	</head>
+	<body  class="noBackGround" onload="setUp();">
+
+		<div class="d-sm-flex flex-wrap fixed-top">
+			<nav class="navbar fixed-top bg-success">
+			  <a class="order-1 nav-item nav-link active" a style="color:white" href="/">Home</a>
+			  <a class="order-2 align-self-center nav-item" a style="color:white"><b>Kohonen Self-Organising Maps</b></a>
+			  <a class="order-3 nav-item nav-link" a style="color:white" href="about">About</a>
+			</nav>
+		</div>
+
+		    <!--<div class="header">
+		    	<div class="col-lg-8 offset-lg-2">
+		    	<div class="home-container">
+		    		<div class="title"><b>Kohonen Self-Organising Maps</b></div>
+		    		<div class="subtitle">Pattern recognition and handwritting clustering using the <em>EMNIST</em> database</div>
+		    	</div>
+		    </div>-->
+		    <div class="main">
+		    	<div class=row>
+
+		    		<div class="col-lg-12" style="text-align: center;">
+			    		<div id="intro" class="explanation1_3">Each of the three inputs can be within the range of 0 to 255</div>
+			    		<br><br>
+			    	</div>
+
+			    	<!-- LEFT COLUMN -->
+			    	<div id="leftCol" class="col-lg-4" style="text-align: center;">
+						<svg width="100" height="100">
+							  <rect id="rect1" x="0" y="0" width="100" height="100" stroke="black" stroke-width="0.5"/>
+						</svg>
+						<br><br>
+						<div class="slidecontainer">
+							<input type="range" min="0" max="255" value="128" class="slider bg-secondary" id="myRange1">
+							<input type="range" min="0" max="255" value="128" class="slider bg-secondary" id="myRange2">
+							<input type="range" min="0" max="255" value="128" class="slider bg-secondary" id="myRange3">
+						</div>
+						<br><br>
+						<p>R: <span id="demo1"></span>, G:<span id="demo2"></span>, B:<span id="demo3"></span></p>
+					</div>
+
+					<!-- CENTER COLUMN -->
+			    	<div id="centerCol" class="col-lg-4" style="text-align: center;">
+			    		<p><span id="demo4"></span> by <span id="demo5"></span></p>
+					</div>
+
+					<!-- RIGHT COLUMN -->
+			    	<div id="rightCol" class="col-lg-4" style="text-align: center;">
+			    		<p><span id="demo6"></span> by <span id="demo7"></span></p>
+					</div>
+
+		    		<div class="col-lg-12" style="text-align: center;">
+						<div id="reactiveInfo">
+							<form id="setupForm">
+								<a id="buttons" class="btn btn-outline-success btn-sm" role="button" onclick="iterate()">Next</a>
+							</form>
+						</div>
+			    	</div>
+
+				</div>
+		    </div>
+
+		    <!--<div class="footer">
+		    	<div class="col-lg-8 offset-lg-2">
+		    		<div class="credits">Made by <a href="https://github.com/EklavyaFCB">Eklavya Sarkar</a></div>
+		    	</div>
+		    </div>-->
+
+		    <div class="footer">
+				<div class="volControl">
+		  			<img src="static/images/volume/shadow/1.png" id="volIcon" height="50" width="50" alt="Mute Volume" onclick="changeVol()">
+				</div>
+		    	<div class="fixed-bottom">
+					<div class="progress">
+					  <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					</div>
+				</div>
+		    </div>
+
+		    <noscript>Your browser does not support JavaScript which is required by Bootstrap 4 for the purposes of this wep-page.</noscript>
+			<script>
+    			// Elements
+				var slider1 = document.getElementById("myRange1");
+				var slider2 = document.getElementById("myRange2");
+				var slider3 = document.getElementById("myRange3");
+
+				var output1 = document.getElementById("demo1");
+				var output2 = document.getElementById("demo2");
+				var output3 = document.getElementById("demo3");
+
+				var output4 = document.getElementById("demo4");
+				var output5 = document.getElementById("demo5");
+				var output6 = document.getElementById("demo6");
+				var output7 = document.getElementById("demo7");
+
+				var rt1 = document.getElementById("rect1");
+
+				var n_iterations = 0;
+
+				// Values
+				output1.textContent = slider1.value;
+				output2.textContent = slider2.value;
+				output3.textContent = slider3.value;
+
+				output4.textContent = 8;
+				output5.textContent = 8;
+
+				output6.textContent = 8;
+				output7.textContent = 8;
+
+				// Calls
+				fillRect(output1.textContent, output2.textContent, output3.textContent);
+
+				slider1.oninput = function() {
+					output1.textContent = this.value;
+					fillRect(output1.textContent, output2.textContent, output3.textContent);
+					fillGrid(output1.textContent, output2.textContent, output3.textContent);
+				}
+
+				slider2.oninput = function() {
+					output2.textContent = this.value;
+					fillRect(output1.textContent, output2.textContent, output3.textContent);
+					fillGrid(output1.textContent, output2.textContent, output3.textContent);
+				}
+
+				slider3.oninput = function() {
+					output3.textContent = this.value;
+					fillRect(output1.textContent, output2.textContent, output3.textContent);
+					fillGrid(output1.textContent, output2.textContent, output3.textContent);
+				}
+
+				// Methods
+				function iterate() {
+
+					if (n_iterations==0) {
+						// Update text
+						nextText = "All three inputs together form a vector of dimension 3";
+						currText.textContent = nextText;
+					} else if (n_iterations==1) {
+						// Update text
+						nextText = "We can visualise them in a random order";
+						currText.textContent = nextText;
+						// Random grid
+						var grid1 = clickableGrid(8,8,0);
+						document.getElementById("centerCol").appendChild(grid1);
+					} else if (n_iterations==2) {
+						// Update text
+						nextText = "But we can also sort them";
+						currText.textContent = nextText;
+						// Ordered
+						var grid2 = clickableGrid(8,8,1);
+						document.getElementById("rightCol").appendChild(grid2);
+					} else if (n_iterations==3) {
+						// Update page
+						location.href = "1_5";
+					}
+
+					// Increment counter
+					n_iterations++;
+
+				}
+				function fillRect(r,g,b) {
+					rt1.style.fill = "rgb("+r+","+g+","+b+")";
+				}
+				     
+				function clickableGrid(rows, cols, type) {
+				    var i=0;
+				    
+				    var colR = 0;
+				    var colB = 0;
+				    var colG = 0;
+
+				    var arrR = [];
+				    var arrG = [];
+				    var arrB = [];
+
+				    var grid = document.createElement('table');
+				    grid.className = 'grid';
+
+				    for (var r=0; r<rows; ++r) {
+				        var tr = grid.appendChild(document.createElement('tr'));
+
+				        for (var c=0; c<cols; ++c) {
+				            
+				            var cell = tr.appendChild(document.createElement('td'));
+				            
+				            cell.innerHTML = ++i;
+
+				            if (type==0) { // Random colors
+				            	colR = Math.floor((Math.random() * 255) + 0);
+				            	colG = Math.floor((Math.random() * 255) + 0);
+				            	colB = Math.floor((Math.random() * 255) + 0);
+
+				            	arrR.push(colR);
+				            	arrG.push(colG);
+				            	arrB.push(colB);
+				            } else if (type==1) {
+				            	// colR = arrR[];
+				            	// colG = arrG[];
+				            	// colB = arrB[];
+				            	colR = colR + Math.round(255/cols);
+				            }
+
+				            console.log(colB)
+				            cell.style.backgroundColor = "rgb("+colR+","+colG+","+colB+")";
+				        }
+							if (type==1) {
+				            	colG = colG + Math.round(255/rows);
+					            /*if (r>0 && r%2==0) {
+					            	colB = colB + Math.round(255/rows);
+					            }*/
+				            }
+				    }
+
+		            /*cell.onmouseover = function() {
+		            	cell.style.backgroundColor = "rgb("+255+","+0+","+0+")";
+		            }
+
+		            cell.onmouseout = function() {
+		            	//cell.innerHTML = 8;
+		            }*/
+
+				    return grid;
+				}
+    		</script>
+		    <!-- Howler.js -->
+		    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.min.js" type="text/javascript"></script>
+		    <!-- Draw.js -->
+		    <script src="static/js/draw.js" type="text/javascript" charset="UTF-8"></script>
+		    <!-- jQuery-->
+		    <!-- integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous" -->
+    		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    		<!-- Slick.js -->
+    		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" type="text/javascript"></script> -->
+    		<!-- Slides.js -->
+    		<!--<script src="static/js/slides.js" type="text/javascript" charset="UTF-8"></script> -->
+    		<!-- Popper.js -->
+    		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    		<!-- Boostrap.js -->
+    		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	</body>
+</html>

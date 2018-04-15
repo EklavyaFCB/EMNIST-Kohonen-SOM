@@ -30,19 +30,19 @@ Username: u5es2
 		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
 
 		<!-- Favicons -->
-		<link rel="apple-touch-icon" sizes="57x57" href="static/images/favicons/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="static/images/favicons/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="static/images/favicons/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="static/images/favicons/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="static/images/favicons/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="static/images/favicons/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="static/images/favicons/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="static/images/favicons/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/favicons/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicons/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="57x57" href="static/images/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="static/images/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="static/images/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="static/images/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="static/images/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="static/images/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="static/images/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="static/images/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="static/images/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon-16x16.png">
 
 		<title>Kohonen SOM</title>
 	</head>
@@ -79,32 +79,30 @@ Username: u5es2
 			    		<br>
 						<div class="card-deck">
 						  <div class="card text-white bg-info mb-3" style="width: 256px;">
-						    <img class="card-img-top" src="static/images/som.png" alt="Card image cap">
+						    <img class="card-img-top" src="static/images/som.png" alt="RGB">
 						    <div class="card-body">
 						      <h5 class="card-title">RGB</h5>
 						      <p class="card-text"></p>
-						      <a href="#" class="card-link">Card link</a>
+						      <a href="1_3" class="card-link">Select</a>
 						    </div>
 						    <div class="card-footer">
 						      <small class="text-dark">Low dimension inputs</small>
 						    </div>
 						  </div>
-						  <div class="card text-white bg-warning mb-3" style="width: 256px;">
-						    <img class="card-img-top" src="static/images/iris3.png" alt="Card image cap">
+						  <div class="card text-white bg-secondary mb-3" style="width: 256px;">
+						    <img class="card-img-top" src="static/images/iris_locked.png" alt="Iris">
 						    <div class="card-body">
 						      <h5 class="card-title">Iris</h5>
 						      <p class="card-text"></p>
-						      <a href="#" class="card-link">Card link</a>
 						    </div>
 						    <div class="card-footer">
 						      <small class="text-dark">Low dimension inputs</small>
 						    </div>
 						  </div>
-						  <div class="card text-white bg-danger mb-3" style="width: 256px;">
-						    <img class="card-img-top" src="static/images/letter.png" alt="Card image cap">
+						  <div class="card text-white bg-secondary mb-3" style="width: 256px;">
+						    <img class="card-img-top" src="static/images/letter_locked.png" alt="OCR">
 						    <div class="card-body">
 						      <h5 class="card-title">Character Recognition</h5>
-						      <a href="2" class="card-link">Card link</a>
 						      <p class="card-text"></p>
 						      
 						    </div>
@@ -130,10 +128,10 @@ Username: u5es2
 		    	<div class="fixed-bottom">
 					<div class="progress">
 					  <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-info" role="progressbar" style="width: 0%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 					</div>
 				</div>
 		    </div>

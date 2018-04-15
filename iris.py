@@ -21,3 +21,4 @@ labels = np.array(data['class'])
 
 # Put inputs in a a seperate NumPy Array, while normalising it
 inputs = np.array(data[["sepal_length", "sepal_width", "petal_length", "petal_width"]]/inputs.max())
+

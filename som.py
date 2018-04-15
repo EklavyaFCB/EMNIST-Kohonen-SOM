@@ -20,7 +20,7 @@ parser.add_argument('-iTe','--inputsTest', type=int, action='store', default=20,
 args = parser.parse_args()
 
 #----------------------------------------------------------------------------------------
-# CONFIG 
+# CONFIG
 #----------------------------------------------------------------------------------------
 
 # Constants
@@ -481,13 +481,13 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 		print('y:',yPlot.shape)
 		print('z:',zPlot.shape)
 		print('BMUs:',bmu_idx_arr.shape)
-		print(labelColor)
+		#print(labelColor)
 		print('')
 		print('x_test:',xPlot_test.shape)
 		print('y_test:',yPlot_test.shape)
 		print('z_test:',zPlot_test.shape)
 		print('BMUs_test:',bmu_idx_arr_test.shape)
-		print(labelColor_test)
+		#print(labelColor_test)
 
 	# Plot Scatterplot
 	plotSize = (n_classes * 2)
@@ -500,23 +500,36 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	# Plot train data
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
 	plt.scatter(xPlot_test, yPlot_test, s=200, marker='x', facecolor=zPlot_test)
+	
+	for i in range(n):
+		plt.text(xPlot[0], yPlot[1], labels[i], ha='center', va='center')
+
 
 	#plt.legend(handles=[n])
 	plt.xlim(-1, plotSize)
 	plt.ylim(-1, plotSize)
 	#plt.axis('off')
+	plt.title('Train: ' + str(args.inputsTrain*n_classes) + ', Test: ' + str(args.inputsTest*n_classes))
 	plt.show()
 
 
 	print(xPlot[0])
 	print(yPlot[0])
-	exportArr = np.zeros((n,3))
-	exportArr[:,0] = xPlot[:] 
-	exportArr[:,1] = yPlot[:]
-	exportArr[:,2] = zPlot[:]
-	print(exportArr[0][0])
+
+	exportTrain = np.zeros((n,2))
+	exportTrain[:,0] = xPlot[:] 
+	exportTrain[:,1] = yPlot[:]
+
+	exportTest = np.zeros((n_test,2))
+	exportTest[:,0] = xPlot_test[:] 
+	exportTest[:,1] = yPlot_test[:]
 	
-	np.savetxt((save_path+'%s'%timeStamped()+'_%s'%n_classes+'classes'+'_%s'%init_learning_rate+'rate'+'_%s'%chosen_inputs_per_class+'inputs_WITH_NOISE'+'.csv'), exportArr, fmt='%.3f', delimiter=',')
+	np.savetxt(('static/data/TrainCoordinates.csv'), exportTrain, fmt='%.3f', delimiter=',', comments='', header='xTrain,yTrain')
+	np.savetxt(('static/data/TestCoordinates.csv'), exportTest, fmt='%.3f', delimiter=',', comments='', header='xTest,yTest')
+	np.savetxt(('static/data/Labels.txt'), labels, fmt='%d', comments='', header='Labels')
+	
+	if args.debug:
+		print('Saved train coordinates with noise')
 
 # Make graphical comparaisons of various parameters
 def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDistTrain, sqDistTest):
@@ -544,11 +557,5 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 	plt.plot(sqDistTrain, 'r')
 	plt.plot(sqDistTest, 'b') # Change this for test data to show every 400 or 2400 steps ?
 	plt.show()
-
-# Call methods
-bmuTrain, radiusTrain, rateTrain, sqDistTrain = trainSOM(inputs, n_iterations, time_constant)
-bmuTest, radiusTest, rateTest, sqDistTest = trainSOM(testInputs, n_iterations_test, time_constant_test)
-
-makeSOM(bmuTrain, labels, bmuTest, testLabels)
 
 #plotVariables(radiusTrain, radiusTest, rateTrain, rateTest, sqDistTrain, sqDistTest)

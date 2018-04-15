@@ -46,7 +46,7 @@ body {
   transition: 1s opacity;
 
   overflow-x: hidden;
-  /*overflow-y: hidden;*/
+  overflow-y: hidden;
   touch-action: pan-down;
 }
 
@@ -60,6 +60,10 @@ body.fade-out {
 b, strong{
 	font-weight: normal
 	text-shadow:1px 0 0 currentColor;
+}
+
+.noBackGround {
+  background-image:none
 }
 
 /*.backNet {
@@ -108,6 +112,26 @@ b, strong{
   text-align: center;
 }
 
+#columns {
+  display: block;
+}
+
+/* GRID */
+
+.grid { margin:1em auto; border-collapse:collapse }
+
+.grid td {
+    cursor:pointer;
+    width:30px; height:30px;
+    border:1px solid #ccc;
+    text-align:center;
+    font-family:sans-serif; font-size:13px
+}
+.grid td.clicked {
+    background-color:yellow;
+    font-weight:bold; color:red;
+}
+
 /* MAIN */
 
 .main {
@@ -118,7 +142,7 @@ b, strong{
 
 .explanation {
   text-align: center;
-  padding-top: 200px;
+  padding-top: 300px;
   padding-bottom: 50px;
   font-size: 55px;
 }
@@ -127,18 +151,55 @@ b, strong{
   text-align: center;
   padding-left: 200px;
   padding-right: 200px;
-  padding-top: 200px;
+  padding-top: 300px;
   padding-bottom: 50px;
   font-size: 25px;
 }
 
-.boxes {  
+.explanation1_3 {
+  text-align: center;
+  padding-left: 200px;
+  padding-right: 200px;
   padding-top: 150px;
+  padding-bottom: 0px;
+  font-size: 25px;
+}
+
+.explanation1_5 {
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 100px;
+  font-size: 25px;
+}
+
+.subtitles1_5 {
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 15px;
+}
+
+#buttons {
+  position: sticky;
+}
+
+.boxes {  
+  padding-top: 200px;
   text-align: center;
 }
 
+#rgb {
+  padding-top: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 55%;
+  text-align: center;
+  display: block;
+}
+
 #chartContent {
-  padding-top: 150px;
+  padding-top: 25px;
   text-align: center;
 }
 
@@ -181,6 +242,7 @@ b, strong{
 }
 
 .start {
+  position: sticky;
   padding: 10px;
   text-align: center;
 }
@@ -195,6 +257,60 @@ b, strong{
 
 #volIcon {
   cursor: pointer;
+}
+
+/* SLIDER */ 
+
+/* The slider itself */
+.slidecontainer {
+
+  width: 100%;
+}
+
+.slider {
+  display: inline;
+  -webkit-appearance: none;
+  width: 50%;
+  height: 8px;
+  border-radius: 5px;
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+/* Slider circle */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+#myRange1::-webkit-slider-thumb {
+  background: #FF0000;
+}
+
+#myRange2::-webkit-slider-thumb {
+  background: #00FF00;
+}
+
+#myRange3::-webkit-slider-thumb {
+  background: #0000FF;
 }
 
 /* FOOTER */ 

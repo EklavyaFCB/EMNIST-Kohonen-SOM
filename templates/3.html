@@ -33,23 +33,23 @@ Username: u5es2
 		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
 
 		<!-- Favicons -->
-		<link rel="apple-touch-icon" sizes="57x57" href="static/images/favicons/apple-icon-57x57.png">
-		<link rel="apple-touch-icon" sizes="60x60" href="static/images/favicons/apple-icon-60x60.png">
-		<link rel="apple-touch-icon" sizes="72x72" href="static/images/favicons/apple-icon-72x72.png">
-		<link rel="apple-touch-icon" sizes="76x76" href="static/images/favicons/apple-icon-76x76.png">
-		<link rel="apple-touch-icon" sizes="114x114" href="static/images/favicons/apple-icon-114x114.png">
-		<link rel="apple-touch-icon" sizes="120x120" href="static/images/favicons/apple-icon-120x120.png">
-		<link rel="apple-touch-icon" sizes="144x144" href="static/images/favicons/apple-icon-144x144.png">
-		<link rel="apple-touch-icon" sizes="152x152" href="static/images/favicons/apple-icon-152x152.png">
-		<link rel="apple-touch-icon" sizes="180x180" href="static/images/favicons/apple-icon-180x180.png">
-		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/favicons/android-icon-192x192.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicons/favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicons/favicon-96x96.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicons/favicon-16x16.png">
+		<link rel="apple-touch-icon" sizes="57x57" href="static/images/apple-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="static/images/apple-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="static/images/apple-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="static/images/apple-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="static/images/apple-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="static/images/apple-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="static/images/apple-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="static/images/apple-icon-152x152.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="static/images/apple-icon-180x180.png">
+		<link rel="icon" type="image/png" sizes="192x192"  href="static/images/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="static/images/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16" href="static/images/favicon-16x16.png">
 
 		<title>Kohonen SOM</title>
 	</head>
-	<body onload="setUp();">
+	<body class="noBackGround" onload="setUp();">
 
 		<div class="d-sm-flex flex-wrap fixed-top">
 			<nav class="navbar fixed-top bg-success">
@@ -69,10 +69,12 @@ Username: u5es2
 		    <div class="main">
 			    <div class="col-lg-8 offset-lg-2">
 
+			    	<div id="intro" class="explanation1_5">Graph</div>
+
 					<div id='chartContent'></div>
 
 		    		<!-- Plot.js -->
-		    		<script src="static/js/plot.js?12" type="text/javascript" charset="UTF-8"></script>
+		    		<script src="static/js/plot.js?1234" type="text/javascript" charset="UTF-8"></script>
 
 					<div id="reactiveInfo">
 						<form id="setupForm" style="text-align:center;">
@@ -98,8 +100,8 @@ Username: u5es2
 					  <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-danger" role="progressbar" style="width: 10%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 					</div>
 				</div>
 		    </div>
