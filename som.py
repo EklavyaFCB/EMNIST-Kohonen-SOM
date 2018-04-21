@@ -185,7 +185,7 @@ if args.debug:
 	print('Train inputs:', inputs.shape)
 	print('Test labels:',testLabels.shape)
 	print('Test inputs:', testInputs.shape)
-	print('colours:', class_colours.shape)
+	print('Colours:', class_colours.shape)
 	print('Training data normalised:', trainNormaliseCheck)
 	print('Testing data normalised:', testNormaliseCheck)
 
@@ -515,7 +515,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	#plt.figure(figsize=(figSize, figSize))
 
 	#-----------------------------------------------------------------------------------
-	# Random nodes without noise
+	# Random train nodes
 	#-----------------------------------------------------------------------------------
 
 	# Plot train random nodes without noise
@@ -523,29 +523,33 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	plt.title(str(n)+' train inputs unsorted without noise')
 	plt.show()
 
-	# Plot test random nodes without noise
-	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot_test)
-	plt.title(str(n_test)+' test inputs unsorted without noise')
-	plt.show()
-
-	# Plot train and test random nodes without noise
-	plt.scatter(x_coords, y_coords, s=20, marker='o', facecolor=zPlot)
-	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot)
-	plt.title(str(n)+' train and test inputs unsorted without noise')
-	plt.show()
-
-	#-----------------------------------------------------------------------------------
-	# Random nodes with noise
-	#-----------------------------------------------------------------------------------
-
 	# Plot train random nodes with noise
 	plt.scatter(x_coordsNoise, y_coordsNoise, s=20, marker='o', facecolor=zPlot)
 	plt.title(str(n)+' train inputs unsorted with noise')
 	plt.show()
 
+	#-----------------------------------------------------------------------------------
+	# Random test nodes
+	#-----------------------------------------------------------------------------------
+
+	# Plot test random nodes without noise
+	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot_test)
+	plt.title(str(n_test)+' test inputs unsorted without noise')
+	plt.show()
+
 	# Plot test random nodes with noise
 	plt.scatter(x_coordsTestNoise, y_coordsTestNoise, s=20, marker='x', facecolor=zPlot_test)
 	plt.title(str(n_test)+' test inputs unsorted with noise')
+	plt.show()
+
+	#-----------------------------------------------------------------------------------
+	# Random train and test nodes
+	#-----------------------------------------------------------------------------------
+
+	# Plot train and test random nodes without noise
+	plt.scatter(x_coords, y_coords, s=20, marker='o', facecolor=zPlot)
+	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot)
+	plt.title(str(n)+' train and test inputs unsorted without noise')
 	plt.show()
 
 	# Plot train and test random nodes with noise
@@ -555,7 +559,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	plt.show()
 
 	#-----------------------------------------------------------------------------------
-	# Data without noise
+	# Train data
 	#-----------------------------------------------------------------------------------
 
 	# Plot train data without noise
@@ -563,10 +567,28 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	plt.title(str(n)+' train inputs sorted without noise')
 	plt.show()
 
+	# Plot train data with noise
+	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
+	plt.title(str(n)+' train inputs sorted with noise')
+	plt.show()
+
+	#-----------------------------------------------------------------------------------
+	# Test data
+	#-----------------------------------------------------------------------------------
+
 	# Plot test data without noise
 	plt.scatter(xPlotTest, yPlotTest, s=20, marker='x', facecolor=zPlot_test)
 	plt.title(str(n_test)+' test inputs sorted without noise')
 	plt.show()
+
+	# Plot test data with noise
+	plt.scatter(xPlotTestNoise, yPlotTestNoise, s=20, marker='x', facecolor=zPlot_test)
+	plt.title(str(n)+' test inputs sorted with noise')
+	plt.show()
+
+	#-----------------------------------------------------------------------------------
+	# Train and Test data
+	#-----------------------------------------------------------------------------------
 
 	# Plot both train and test data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
@@ -574,19 +596,6 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	plt.title(str(n+n_test)+' train and test inputs sorted without noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
-	# Data with noise
-	#-----------------------------------------------------------------------------------
-
-	# Plot train data with noise
-	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
-	plt.title(str(n)+' train inputs sorted with noise')
-	plt.show()
-
-	# Plot test data with noise
-	plt.scatter(xPlotTestNoise, yPlotTestNoise, s=20, marker='x', facecolor=zPlot_test)
-	plt.title(str(n)+' test inputs sorted with noise')
-	plt.show()
 
 	# Plot both train and test data with noise
 	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
@@ -623,21 +632,21 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	#-----------------------------------------------------------------------------------
 
 	# Declare
-	randTrain = np.zeros((n,5))
-	randTest = np.zeros((n_test,5))
-	randCombined = np.zeros((n+n_test,5))
+	randTrain = np.zeros((n,6))
+	randTest = np.zeros((n_test,6))
+	randCombined = np.zeros((n+n_test,6))
 
-	randTrainNoise = np.zeros((n,5))
-	randTestNoise = np.zeros((n_test,5))
-	randCombinedNoise = np.zeros((n+n_test,5))
+	randTrainNoise = np.zeros((n,6))
+	randTestNoise = np.zeros((n_test,6))
+	randCombinedNoise = np.zeros((n+n_test,6))
 
-	Train = np.zeros((n,5))
-	Test = np.zeros((n_test,5))
-	combined = np.zeros((n+n_test,5))
+	Train = np.zeros((n,6))
+	Test = np.zeros((n_test,6))
+	combined = np.zeros((n+n_test,6))
 
-	TrainNoise = np.zeros((n,5))
-	TestNoise = np.zeros((n_test,5))
-	combinedNoise = np.zeros((n+n_test,5))
+	TrainNoise = np.zeros((n,6))
+	TestNoise = np.zeros((n_test,6))
+	combinedNoise = np.zeros((n+n_test,6))
 
 	# Convert for D3
 	fullRGB = zPlot*255
@@ -650,75 +659,87 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	randTrain[:,0] = x_coords
 	randTrain[:,1] = y_coords
 	randTrain[:,2:5] = fullRGB
+	randTrain[:,5:6] = labels-1
 
 	randTest[:,0] = x_coordsTest
 	randTest[:,1] = y_coordsTest
 	randTest[:,2:5] = fullRGB_test
+	randTest[:,5:6] = testLabels
 
 	randCombined[:,0] = np.concatenate((x_coords,x_coordsTest))
 	randCombined[:,1] = np.concatenate((y_coords,y_coordsTest))
 	randCombined[:,2:5] = np.concatenate((fullRGB,fullRGB_test))
+	randCombined[:,5:6] = np.concatenate((labels-1,testLabels))
  
  	# Nodes with noise
 	randTrainNoise[:,0] = x_coordsNoise
 	randTrainNoise[:,1] = y_coordsNoise
 	randTrainNoise[:,2:5] = fullRGB
+	randTrainNoise[:,5:6] = labels-1
 
 	randTestNoise[:,0] = x_coordsTestNoise
 	randTestNoise[:,1] = y_coordsTestNoise
 	randTestNoise[:,2:5] = fullRGB_test
+	randTestNoise[:,5:6] = testLabels
 
 	randCombinedNoise[:,0] = np.concatenate((x_coordsNoise,x_coordsTestNoise))
 	randCombinedNoise[:,1] = np.concatenate((y_coordsNoise,y_coordsTestNoise))
 	randCombinedNoise[:,2:5] = np.concatenate((fullRGB,fullRGB_test))
+	randCombinedNoise[:,5:6] = np.concatenate((labels-1,testLabels))
  
  	# Data without noise
 	Train[:,0] = xPlot
 	Train[:,1] = yPlot
 	Train[:,2:5] = fullRGB
+	Train[:,5:6] = labels-1
 
 	Test[:,0] = xPlotTest
 	Test[:,1] = yPlotTest
 	Test[:,2:5] = fullRGB_test
+	Test[:,5:6] = testLabels
 
 	combined[:,0] = np.concatenate((xPlot,xPlotTest))
 	combined[:,1] = np.concatenate((yPlot,yPlotTest))
 	combined[:,2:5] = np.concatenate((fullRGB,fullRGB_test))
+	combined[:,5:6] = np.concatenate((labels-1,testLabels))
  
  	# Data with noise
 	TrainNoise[:,0] = xPlotNoise
 	TrainNoise[:,1] = yPlotNoise
 	TrainNoise[:,2:5] = fullRGB
+	TrainNoise[:,5:6] = labels-1
  
 	TestNoise[:,0] = xPlotTestNoise
 	TestNoise[:,1] = yPlotTestNoise
 	TestNoise[:,2:5] = fullRGB_test
+	TestNoise[:,5:6] = testLabels
 
 	combinedNoise[:,0] = np.concatenate((xPlotNoise,xPlotTestNoise))
 	combinedNoise[:,1] = np.concatenate((yPlotNoise,yPlotTestNoise))
 	combinedNoise[:,2:5] = np.concatenate((fullRGB,fullRGB_test))
+	combinedNoise[:,5:6] = np.concatenate((labels-1,testLabels))
 
 	# Export
-	np.savetxt(('static/data/OCR/RandTrain.csv'), randTrain, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/RandTest.csv'), randTest, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/RandCombined.csv'), randCombined, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
+	np.savetxt(('static/data/OCR/RandTrain.csv'), randTrain, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/RandTest.csv'), randTest, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/RandCombined.csv'), randCombined, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
 
-	np.savetxt(('static/data/OCR/RandTrainNoise.csv'), randTrainNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/RandTestNoise.csv'), randTestNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/randCombinedNoise.csv'), randCombinedNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
+	np.savetxt(('static/data/OCR/RandTrainNoise.csv'), randTrainNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/RandTestNoise.csv'), randTestNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/randCombinedNoise.csv'), randCombinedNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
 
-	np.savetxt(('static/data/OCR/Train.csv'), Train , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/Test.csv'), Test , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/Combined.csv'), combined , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
+	np.savetxt(('static/data/OCR/Train.csv'), Train , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/Test.csv'), Test , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/Combined.csv'), combined , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
 
-	np.savetxt(('static/data/OCR/TrainNoise.csv'), TrainNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/TestNoise.csv'), TestNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
-	np.savetxt(('static/data/OCR/CombinedNoise.csv'), combinedNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
+	np.savetxt(('static/data/OCR/TrainNoise.csv'), TrainNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/TestNoise.csv'), TestNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
+	np.savetxt(('static/data/OCR/CombinedNoise.csv'), combinedNoise , fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B,label')
 
 	#np.savetxt(('static/data/OCR/TrainCoordinates.csv'), exportTrain, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
 	#np.savetxt(('static/data/OCR/TestCoordinates.csv'), exportTest, fmt='%.3f', delimiter=',', comments='', header='xSOM,ySOM,R,G,B')
 	np.savetxt(('static/data/OCR/Labels.txt'), labels, fmt='%d', comments='', header='Labels')
-	np.savetxt(('static/data/OCR/TestLabels.txt'), test_labels, fmt='%d', comments='', header='test_labels')
+	np.savetxt(('static/data/OCR/TestLabels.txt'), testLabels, fmt='%d', comments='', header='testLabels')
 	
 	#if args.debug:
 	#	print('Saved train coordinates with noise')

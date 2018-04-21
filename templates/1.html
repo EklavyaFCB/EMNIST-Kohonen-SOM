@@ -114,9 +114,13 @@ Username: u5es2
 
 					if (n_iterations==0) {
 						// Update text
-						currPara1.textContent = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning patterns.";
-						currPara2.textContent = "Teuvo Kohonen's algorithm allows computers to discern patterns and sort them according to inputs, without understanding the sum of what they represent.";
+						currPara1.innerHTML = "Computers, although very competent at following large sets of linear, logical and arithmetic rules, have historically not been as capable as humans at discerning patterns.";
+						currPara2.innerHTML = "Kohonen's algorithm allows computers <b class='text-info'>cluster</b> patterns according to their <b class='text-info'>similarities</b>, by using artificial neural networks.";
 					} else if (n_iterations==1) {
+						// Update text
+						currPara1.innerHTML = "Kohonen's algorithm can take inputs in <b class='text-info'>high-dimensions</b>, and visualise them on a low <b class='text-info'>2D</b> dimensions.";
+						currPara2.innerHTML = "Let's take a look at a few examples of such cases, and how <b class='text-info'>unsupervised learning</b> can be used to cluster data by similarity.";
+					} else if (n_iterations==2) {
 						// Update page
 						location.href = "cards1";
 					}

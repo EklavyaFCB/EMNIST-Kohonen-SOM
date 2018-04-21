@@ -1,6 +1,6 @@
 // Margins
 var margin = {top: 20, right: 10, bottom: 20, left: 15},
-    width = 300 - margin.left - margin.right,
+    width = 600 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
 
 // Axis
@@ -42,10 +42,10 @@ var svg2_2 = d3.select("#chartContent2_2").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Unsorted graph
-d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
+d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(data) {
 
     // Read as ints not strings
-    trainData.forEach(function(d) {
+    data.forEach(function(d) {
       d.xRGB = +d.xRGB;
       d.yRGB = +d.yRGB;
       d.R = +d.R
@@ -53,11 +53,9 @@ d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
       d.B = +d.B;
     });
 
-    console.log(trainData);
-
     // Define domains of x and y axis
-    x.domain(d3.extent(trainData, function(d) { return d.xRGB; })).nice();
-    y.domain(d3.extent(trainData, function(d) { return d.yRGB; })).nice();
+    x.domain(d3.extent(data, function(d) { return d.xRGB; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.yRGB; })).nice();
 
     // Draw
     // X-axis
@@ -85,7 +83,7 @@ d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
         .style("text-anchor", "end")*/
 
     svg1_1.selectAll(".dot")
-        .data(trainData)
+        .data(data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
@@ -115,10 +113,10 @@ d3.csv("/static/data/RGB/RGBUnsorted.csv").then(function(trainData) {
   });
 
 // Unsorted with noise
-d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
+d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(data) {
 
     // Read as ints not strings
-    trainData.forEach(function(d) {
+    data.forEach(function(d) {
       d.xRGB = +d.xRGB;
       d.yRGB = +d.yRGB;
       d.R = +d.R
@@ -126,11 +124,9 @@ d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
       d.B = +d.B;
     });
 
-    console.log(trainData);
-
     // Define domains of x and y axis
-    x.domain(d3.extent(trainData, function(d) { return d.xRGB; })).nice();
-    y.domain(d3.extent(trainData, function(d) { return d.yRGB; })).nice();
+    x.domain(d3.extent(data, function(d) { return d.xRGB; })).nice();
+    y.domain(d3.extent(data, function(d) { return d.yRGB; })).nice();
 
     // Draw
     // X-axis
@@ -158,7 +154,7 @@ d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
         .style("text-anchor", "end")*/
 
     svg1_2.selectAll(".dot")
-        .data(trainData)
+        .data(data)
       .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
@@ -188,10 +184,9 @@ d3.csv("/static/data/RGB/RGBUnsortedNoise.csv").then(function(trainData) {
   });
 
 // Sorted without noise
-d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
-  console.log(testData);
+d3.csv("/static/data/RGB/RGBSorted.csv").then(function(data) {
 
-  testData.forEach(function(d) {
+  data.forEach(function(d) {
     d.xRGB = +d.xRGB;
     d.yRGB = +d.yRGB;
     d.R = +d.R
@@ -200,8 +195,8 @@ d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
   });
 
   // Define domains of x and y axis
-  x.domain(d3.extent(testData, function(d) { return d.xRGB; })).nice();
-  y.domain(d3.extent(testData, function(d) { return d.yRGB; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.xRGB; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.yRGB; })).nice();
 
   // Draw
   // X-axis
@@ -229,7 +224,7 @@ d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
       .style("text-anchor", "end")*/
 
   svg2_1.selectAll(".dot")
-        .data(testData)
+        .data(data)
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)
@@ -239,10 +234,9 @@ d3.csv("/static/data/RGB/RGBSorted.csv").then(function(testData) {
 });
 
 // Sorted with noise
-d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(testData) {
-  console.log(testData);
+d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(data) {
 
-  testData.forEach(function(d) {
+  data.forEach(function(d) {
     d.xRGB = +d.xRGB;
     d.yRGB = +d.yRGB;
     d.R = +d.R
@@ -251,8 +245,8 @@ d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(testData) {
   });
 
   // Define domains of x and y axis
-  x.domain(d3.extent(testData, function(d) { return d.xRGB; })).nice();
-  y.domain(d3.extent(testData, function(d) { return d.yRGB; })).nice();
+  x.domain(d3.extent(data, function(d) { return d.xRGB; })).nice();
+  y.domain(d3.extent(data, function(d) { return d.yRGB; })).nice();
 
   // Draw
   // X-axis
@@ -280,7 +274,7 @@ d3.csv("/static/data/RGB/RGBSortedNoise.csv").then(function(testData) {
       .style("text-anchor", "end")*/
 
   svg2_2.selectAll(".dot")
-        .data(testData)
+        .data(data)
     .enter().append("circle")
       .attr("class", "dot")
       .attr("r", 3.5)

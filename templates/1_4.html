@@ -24,7 +24,7 @@ Username: u5es2
 	    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/> -->
 
 	    <!-- Main CSS -->
-	    <link href="static/css/main.css" rel="stylesheet" type="text/css">
+	    <link href="static/css/main.css?123" rel="stylesheet" type="text/css">
 
 		<!-- Fonts -->
 		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
@@ -67,7 +67,7 @@ Username: u5es2
 		    	<div class=row>
 
 		    		<div class="col-lg-12" style="text-align: center;">
-			    		<div id="intro" class="explanation1_3">Each of the three inputs can be within the range of 0 to 255</div>
+			    		<div id="intro" class="explanation1_3">Each of the three inputs is within the range of 0 to 255, representing the amount of red, blue and green light added together.</div>
 			    		<br><br>
 			    	</div>
 
@@ -88,14 +88,14 @@ Username: u5es2
 
 					<!-- CENTER COLUMN -->
 			    	<div id="centerCol" class="col-lg-4" style="text-align: center;">
-			    		<p><span id="demo4"></span> by <span id="demo5"></span></p>
+			    		<p><span id="demo4"></span><span id="demo5"></span></p>
 						<svg id="circleGrid1" height="200" width="200">
 						</svg>
 					</div>
 
 					<!-- RIGHT COLUMN -->
 			    	<div id="rightCol" class="col-lg-4" style="text-align: center;">
-			    		<p><span id="demo6"></span> by <span id="demo7"></span></p>
+			    		<p><span id="demo6"></span><span id="demo7"></span></p>
 						<svg id="circleGrid2" height="200" width="200">
 						</svg>
 					</div>
@@ -159,12 +159,6 @@ Username: u5es2
 				output2.textContent = slider2.value;
 				output3.textContent = slider3.value;
 
-				output4.textContent = 8;
-				output5.textContent = 8;
-
-				output6.textContent = 8;
-				output7.textContent = 8;
-
 				// Calls
 				fillCircle(output1.textContent, output2.textContent, output3.textContent);
 
@@ -191,20 +185,34 @@ Username: u5es2
 
 					if (n_iterations==0) {
 						// Update text
-						nextText = "All three inputs together form a vector of dimension 3";
-						currText.textContent = nextText;
+						nextText = "Together all three inputs produce a single vector of dimension 3 representing one colour.<br><br> ";
+						currText.innerHTML = nextText;
 					} else if (n_iterations==1) {
 						// Update text
-						nextText = "We can visualise them in a random order";
+						// output1.textContent = 255;
+						// output2.textContent = 0;
+						// output3.textContent = 0;
+
+						// slider1.value = output1.textContent;
+						// slider2.value = output2.textContent;
+						// slider3.value = output3.textContent;
+
+						// fillCircle(output1.textContent, output2.textContent, output3.textContent);
+
+						output4.textContent = "10 by";
+						output5.textContent = "10";
+						nextText = "If we make a map of 100 such 3D vectors, with each vector representing a slightly different colour.";
 						currText.textContent = nextText;
 						// Random grid
 						//var grid1 = clickableGrid(8,8,0);
 						circleGrid(0);
 						//document.getElementById("centerCol").appendChild(circles);
 					} else if (n_iterations==2) {
+						output6.textContent = "10 by";
+						output7.textContent = "10";
 						// Update text
-						nextText = "But we can also sort them";
-						currText.textContent = nextText;
+						nextText = "Could we cluster them according to their similarities ?<br><br> ";
+						currText.innerHTML = nextText;
 						// Ordered
 						//var grid2 = clickableGrid(8,8,1);
 						circleGrid(1);
@@ -239,12 +247,16 @@ Username: u5es2
 					for (var x = 10; x < 200; x += 20) {
 					    for (var y = 10; y < 200; y += 20) {
 					    	if (type==0) { // Random colors
-					            colR = Math.floor((Math.random() * 255) + 0);
-					            //colG = Math.floor((Math.random() * 255) + 0);
+					            colR = slider1.value;
+					            colB = slider3.value;
+					            colG = Math.floor((Math.random() * 255) + 0);
+					            //colG = slider2.value;
+					            //colR = Math.floor((Math.random() * 255) + 0);
 					            //colB = Math.floor((Math.random() * 255) + 0);
-					            colB = 0;
+					            //colB = 0;
 				        	} else if (type==1) {
-				            	colR = colR + Math.round(255/cols);
+				            	colR = colR + Math.round((255)/cols);
+				            	//colB = slider3.value;
 				            }
 
 					        var circle = document.createElementNS(svgns, 'circle');
@@ -252,11 +264,11 @@ Username: u5es2
 					        circle.setAttributeNS(null, 'cx', x);
 					        circle.setAttributeNS(null, 'cy', y);
 					        circle.setAttributeNS(null, 'r', 10);
-					        circle.setAttributeNS(null, 'style', "fill: rgb("+colR+","+colG+","+colB+"); stroke: blue; stroke-width: 1px;");
+					        circle.setAttributeNS(null, 'style', "fill: rgb("+colR+","+colG+","+colB+"); stroke: black; stroke-width: 0.5px;");
 					        container.appendChild(circle);
 					    }
 						if (type==1) {
-			            	colG = colG + Math.round(255/rows);
+			            	colG = colG + Math.round((255/2)/cols);
 			            }
 					}
 				}

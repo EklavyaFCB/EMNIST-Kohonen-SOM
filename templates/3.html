@@ -132,9 +132,9 @@ Username: u5es2
 			    </div>
 
 	    		<div class="col-lg-12" style="text-align: center;">
-					<div id="reactiveInfo">
+					<div id="reactiveInfoOCR">
 						<form id="setupForm">
-							<a id="buttons" class="btn btn-outline-danger btn-sm" role="button">Next</a>
+							<a id="buttons" class="btn btn-outline-danger btn-sm" onclick="iterate()">Next</a>
 						</form>
 					</div>
 		    	</div>
@@ -154,18 +154,30 @@ Username: u5es2
 				</div>
 		    	<div class="fixed-bottom">
 					<div class="progress">
-					  <div class="progress-bar" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-success" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-success" role="progressbar" style="width: 20%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
-					  <div class="progress-bar bg-warning" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+					  <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 					  <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
 					</div>
 				</div>
 		    </div>
 
 		    <noscript>Your browser does not support JavaScript which is required by Bootstrap 4 for the purposes of this wep-page.</noscript>
+    		<script>
+    			n_iterations = 0;
+				// Methods
+				function iterate() {
+					if (n_iterations==0) {
+						// Update page
+						location.href = "about";
+					}
+					// Increment counter
+					n_iterations++;
+				}
+    		</script>
 		    <!-- Plot.js -->
-		    <script src="static/js/plot.js?1234" type="text/javascript" charset="UTF-8"></script>
+		    <script src="static/js/plot.js?12345" type="text/javascript" charset="UTF-8"></script>
 		    <!-- Howler.js -->
 		    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.min.js" type="text/javascript"></script>
 		    <!-- Draw.js -->

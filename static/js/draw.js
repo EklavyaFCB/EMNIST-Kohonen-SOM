@@ -61,7 +61,7 @@ function setUpCanvas() {
   setUpMouseCanvas();
   setUpTouchCanvas();
   setUpScrollEvents();
-  setUpSliders();
+  //setUpSliders();
 
 }
 
@@ -349,6 +349,9 @@ function carry() {
   console.log("Carry");
   console.log("xArr:" + xArr);
   console.log(coordinates);
+
+
+
   if (typeof ctx2 !== 'undefined') {
     //reDraw();
   }

@@ -17,6 +17,8 @@ import matplotlib.pyplot as plt
 # Argument Parser for debugging
 parser = argparse.ArgumentParser(description='Make a 2D map of a multidimensional input')
 parser.add_argument('-d','--debug', action='store_true', default=False, help='Print debug messages to stderr')
+parser.add_argument('-r','--rate', type=float, action='store', default=0.3, help='Choose learning rate (range: 0-1)')
+parser.add_argument('-i','--inputs', type=int, action='store', default=20, help='Choose number of train inputs per class (range: 0-2400)')
 args = parser.parse_args()
 
 #----------------------------------------------------------------------------------------
@@ -59,7 +61,10 @@ def setUp(n_iterations):
 	network_dimensions = np.array([n_classes*2,n_classes*2])
 
 	n_iterations = n
-	init_learning_rate = 0.3
+
+	# Learning rate (Eta), range: 0 - 1
+	if (args.rate): 
+		init_learning_rate =  args.rate
 
 	if args.debug:
 		print('n_classes:', n_classes)
@@ -273,17 +278,17 @@ def makeSOM(bmu_idx_arr):
 
 	# Plot nodes
 	plt.scatter(x_coords, y_coords, s=20, facecolor=zPlot)
-	plt.title(str(n)+' Inputs unsorted')
+	plt.title(str(n)+' Inputs unsorted without noise')
 	plt.show()
 
 	# Plot nodes with noise
 	plt.scatter(x_coordsNoise, y_coordsNoise, s=20, facecolor=zPlot)
-	plt.title(str(n)+' Inputs unsorted')
+	plt.title(str(n)+' Inputs unsorted with noise')
 	plt.show()
 
 	# Plot data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
-	plt.title(str(n)+' Inputs sorted')
+	plt.title(str(n)+' Inputs sorted without noise')
 	plt.show()
 
 	# Plot data with noise
@@ -360,7 +365,11 @@ def plotVariables(radius, learnRate, sqDist):
 	plt.show()
 
 
-inputs = setUp(60000)
-bmu, radius, rate, sqDist = trainSOM(inputs, 60000)
+# Main
+if (args.inputs): 
+	inputsQuantity =  args.inputs
+
+inputs = setUp(inputsQuantity)
+bmu, radius, rate, sqDist = trainSOM(inputs, inputsQuantity)
 makeSOM(bmu)
 plotVariables(radius, rate, sqDist)

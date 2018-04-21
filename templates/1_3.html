@@ -24,7 +24,7 @@ Username: u5es2
 	    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"/> -->
 
 	    <!-- Main CSS -->
-	    <link href="static/css/main.css" rel="stylesheet" type="text/css">
+	    <link href="static/css/main.css?1" rel="stylesheet" type="text/css">
 
 		<!-- Fonts -->
 		<!--link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">-->
@@ -66,10 +66,10 @@ Username: u5es2
 		    <div class="main">
 			    <div class="col-lg-8 offset-lg-2">
 
-			    	<div id="intro" class="explanation1_3">RGB is a vector with 3 inputs</div>
+			    	<div id="intro" class="explanationCircles">An single RGB vector has 3 inputs</div>
 
 			    	<div id="rgb">
-						<svg height="500" width="500">
+						<svg height="475" width="500">
 						  <circle 
 							  cx="250" cy="180" r="150" stroke="black" stroke-width="0" fill="#FF0000" 
 							  opacity="0.8" 
@@ -90,14 +90,16 @@ Username: u5es2
 						  />
 						</svg>
 		    		</div>
+		    	</div>
 
+	    		<div class="col-lg-12" style="text-align: center;">
 					<div id="reactiveInfo">
-						<form id="setupForm" style="text-align:center;">
-							<a id="buttons" class="btn btn-outline-success btn-sm" role="button" href="1_4">Next</a>
+						<form id="setupForm">
+							<a id="buttons" class="btn btn-outline-success btn-sm" role="button" onclick="iterate()">Next</a>
 						</form>
 					</div>
+		    	</div>
 
-				</div>
 		    </div>
 
 		    <!--<div class="footer">
@@ -122,6 +124,19 @@ Username: u5es2
 		    </div>
 
 		    <noscript>Your browser does not support JavaScript which is required by Bootstrap 4 for the purposes of this wep-page.</noscript>
+    		<script>
+    			n_iterations = 0;
+				// Methods
+				function iterate() {
+					if (n_iterations==0) {
+						// Update page
+						console.log("Here");
+						location.href = "1_4";
+					}
+					// Increment counter
+					n_iterations++;
+				}
+    		</script>
 		    <!-- Howler.js -->
 		    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.min.js" type="text/javascript"></script>
 		    <!-- Draw.js -->

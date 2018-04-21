@@ -46,7 +46,7 @@ body {
   transition: 1s opacity;
 
   overflow-x: hidden;
-  overflow-y: hidden;
+  /*overflow-y: hidden;*/
   touch-action: pan-down;
 }
 
@@ -82,7 +82,7 @@ b, strong{
 .tooltip {
     font-family: 'FuturaHandwritten';
     position: absolute;
-    font-size: 12px;
+    font-size: 18px;
     width:  auto;
     height: auto;
     pointer-events: none;
@@ -163,6 +163,9 @@ b, strong{
   min-height: 100%;
 }
 
+/* ADJUST IF NECESSARY */
+
+/* Index page */
 .explanation {
   text-align: center;
   padding-top: 300px;
@@ -170,20 +173,33 @@ b, strong{
   font-size: 55px;
 }
 
+/* Intro page (1) */
 .explanation1 {
   text-align: center;
   padding-left: 200px;
   padding-right: 200px;
-  padding-top: 300px;
+  padding-top: 250px;
   padding-bottom: 50px;
   font-size: 25px;
 }
 
-.explanation1_3 {
+/* RGB Big Circle page (1_3) */
+.explanationCircles {
   text-align: center;
   padding-left: 200px;
   padding-right: 200px;
   padding-top: 150px;
+  padding-bottom: 0px;
+  font-size: 25px;
+}
+
+/* RGB Small circles page (1_4)*/
+/* About page */
+.explanation1_3 {
+  text-align: center;
+  padding-left: 200px;
+  padding-right: 200px;
+  padding-top: 200px;
   padding-bottom: 0px;
   font-size: 25px;
 }
@@ -203,17 +219,18 @@ b, strong{
   font-size: 15px;
 }
 
+.boxes {  
+  padding-top: 150px;
+  text-align: center;
+}
+
 #buttons {
   position: sticky;
 }
 
-.boxes {  
-  padding-top: 200px;
-  text-align: center;
-}
-
 #rgb {
   padding-top: 0px;
+  padding-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
   width: 55%;
@@ -224,6 +241,10 @@ b, strong{
 #chartContent {
   padding-top: 25px;
   text-align: center;
+}
+
+#reactiveInfoOCR {
+  padding-top: 75px;
 }
 
 .canvas {

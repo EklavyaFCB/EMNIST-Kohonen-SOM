@@ -64,6 +64,35 @@ var svg6_1 = d3.select("#chartContent6_1").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 //----------------------------------------------------------------------------------------
+// TOOLTIPS
+//----------------------------------------------------------------------------------------
+
+var tooltip1 = d3.select("#chartContent1_1").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+// Mouseover Event Handler
+var tipMouseover = function(d) {
+
+    var html  = "<span style='color:" + d3.rgb(d.R,d.G,d.B) + ";'>" + d.label;
+
+    tooltip1.html(html)
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY - $(this).parent().offset().top) + "px")
+      .transition()
+        .duration(200) // ms
+        .style("opacity", .9)
+
+};
+
+// Mouseout event handler
+var tipMouseout = function(d) {
+    tooltip.transition()
+        .duration(300) // ms
+        .style("opacity", 0);
+};
+
+//----------------------------------------------------------------------------------------
 // BOTTOM ROW
 //----------------------------------------------------------------------------------------
 var svg1_2 = d3.select("#chartContent1_2").append("svg")
@@ -113,9 +142,10 @@ d3.csv("/static/data/OCR/RandTrain.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -155,6 +185,8 @@ d3.csv("/static/data/OCR/RandTrain.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 
@@ -164,9 +196,10 @@ d3.csv("/static/data/OCR/Train.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -206,6 +239,8 @@ d3.csv("/static/data/OCR/Train.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 
@@ -215,9 +250,10 @@ d3.csv("/static/data/OCR/RandTest.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -257,6 +293,8 @@ d3.csv("/static/data/OCR/RandTest.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 
@@ -266,9 +304,10 @@ d3.csv("/static/data/OCR/Test.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -308,6 +347,8 @@ d3.csv("/static/data/OCR/Test.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 
@@ -317,9 +358,10 @@ d3.csv("/static/data/OCR/RandCombined.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -359,6 +401,8 @@ d3.csv("/static/data/OCR/RandCombined.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 
@@ -368,9 +412,10 @@ d3.csv("/static/data/OCR/Combined.csv").then(function(data) {
    data.forEach(function(d) {
       d.xSOM = +d.xSOM;
       d.ySOM = +d.ySOM;
-      d.R = +d.R
+      d.R = +d.R;
       d.G = +d.G;
       d.B = +d.B;
+      d.label = +d.label;
     });
 
    console.log(data);
@@ -410,6 +455,8 @@ d3.csv("/static/data/OCR/Combined.csv").then(function(data) {
         .attr("cx", function(d) { return x(d.xSOM); })
         .attr("cy", function(d) { return y(d.ySOM); })
         .style("fill", function(d) {return d3.rgb(d.R,d.G,d.B); })
+        .on("mouseover", tipMouseover)
+        .on("mouseout", tipMouseout);
 
 });
 

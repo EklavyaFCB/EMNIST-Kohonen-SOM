@@ -15,6 +15,7 @@ import matplotlib.pyplot as plt
 # Argument Parser for debugging
 parser = argparse.ArgumentParser(description='Make a 2D map of a multidimensional input')
 parser.add_argument('-d','--debug', action='store_true', default=False, help='Print debug messages to stderr')
+parser.add_argument('-r','--rate', type=float, action='store', default=0.3, help='Choose learning rate (range: 0-1)')
 args = parser.parse_args()
 
 #----------------------------------------------------------------------------------------
@@ -30,15 +31,21 @@ MAX_INPUTS_PER_CLASS = 50		#|
 
 chosen_inputs_per_class = 50
 n_classes = MAX_CLASSES
-init_learning_rate = 0.3
+
+# Learning rate (Eta), range: 0 - 1
+if (args.rate): 
+	init_learning_rate =  args.rate
+
+#init_learning_rate = 0.3
 
 if args.debug:
 	print("Debug mode ON")
 	print('Loading input files ...')
 
 # Raw Data
-url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
-data = pd.read_csv(url, encoding='utf-8', header=None)
+#url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
+data_path = 'static/data/Iris/IrisOriginal.csv'
+data = pd.read_csv(data_path, encoding='utf-8', header=None)
 
 # Add Column names
 attributes = ["sepal_length", "sepal_width", "petal_length", "petal_width", "class"]
