@@ -64,12 +64,12 @@ Username: u5es2
 		    	</div>
 		    </div>-->
 		    <div class="main">
-			    <div class="col-lg-8 offset-lg-2">
+			    <div class="col-lg-12" style="text-align: center;">
 
 			    	<!--<div class="explanation">Kohonen's SOM is a type of artificial neural network that is trained using unsupervised learning to produce a low-dimensional, discretised representation of the input space of the training samples, called a map, and is therefore a method to do dimensionality reduction.</div>-->
 			    	<div class="canvas" id="parentCanvas">
 						<canvas id="myCanvas" width="336" height="336">Use Google Chrome.</canvas>
-						<!--<canvas id="myCanvas2" width="336" height="336"></canvas>-->
+						<canvas id="myCanvas2" width="336" height="336"></canvas>
 					</div>
 
 					<div class="guide">
@@ -77,11 +77,11 @@ Username: u5es2
 					</div>
 
 					<div id="reactiveInfo">
-						<form id="setupForm" style="text-align:center;">
+						<form id="setupForm" method="POST" style="text-align:center;">
 							<!--<input type="button" class="btn btn-outline-info btn-sm" value="Grid" onclick="drawGrid()">-->
 							<input type="button" class="btn btn-outline-success btn-sm" value="Carry" onclick="carry()">
 							<input type="button" class="btn btn-outline-warning btn-sm" value="Clear" onclick="clearCanvas(0)"> 
-							<a class="btn btn-outline-danger btn-sm" href="" role="button">Next</a>
+							<a class="btn btn-outline-danger btn-sm" name="nextBTN" role="button">Next</a>
 						</form>
 					</div>
 
@@ -119,8 +119,32 @@ Username: u5es2
 		    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.9/howler.min.js" type="text/javascript"></script>
 		    <!-- Draw.js -->
 		    <script src="static/js/draw.js" type="text/javascript" charset="UTF-8"></script>
-		    <!-- jQuery -->
-    		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		    <!-- jQuery
+    		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    		<!-- jQuery NON-SLIM -->
+    		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    		<script>
+				$(document).ready(function() {
+				  $('#nextBTN').click(function() {
+				     $.ajax({
+						type: 'POST',
+						contentType: 'application/json',
+						data: myJSON,
+						dataType: 'json',
+						url: '/canvas',
+						success: function (e) {
+							console.log("Success");
+							console.log(e);
+							//window.location = "http://127.0.0.1:5000/canvaspost";
+						},
+						error: function(error) {
+							console.log("Failure");
+							console.log(error);
+						}
+				    });
+				  });
+				});
+    		</script>
     		<!-- Slick.js -->
     		<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js" type="text/javascript"></script> -->
     		<!-- Slides.js -->

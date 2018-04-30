@@ -15,14 +15,9 @@ Username: u5es2
 html {
   height: 100%;
   position: relative;
-  /*-webkit-tap-highlight-color: rgba(0, 0, 0, 0);*/
 }
 
 body {
-  /* background-color: #fff2e7; */
-  /*font-family: 'Roboto', sans-serif;*/
-  /*font-weight: 300;*/
-
   margin:0;
   padding:0;
   height:100%;
@@ -46,10 +41,9 @@ body {
   transition: 1s opacity;
 
   overflow-x: hidden;
-  /*overflow-y: hidden;*/
+  overflow-y: hidden;
   touch-action: pan-down;
 }
-
 
 body.fade-out {
     opacity: 0;
@@ -89,18 +83,6 @@ b, strong{
     background-color: white;
 }
 
-/*.backNet {
-  background-image: url("/static/images/Net2.png");
-  background-repeat: no-repeat, repeat;
-  background-size: cover;
-}
-
-.home-container {
-  margin: 0 auto;
-  margin: 0 auto;
-  width: 800px;
-}*/
-
 /* NAV */
 .navbar {
 	font-family: 'FuturaHandwritten';
@@ -108,7 +90,7 @@ b, strong{
 
 /* HEADER */
 
-.header { /*, .footer {*/
+.header {
   font-family: 'FuturaHandwritten';
   color: #fff;
   background: #329894;
@@ -163,12 +145,10 @@ b, strong{
   min-height: 100%;
 }
 
-/* ADJUST IF NECESSARY */
-
 /* Index page */
 .explanation {
   text-align: center;
-  padding-top: 300px;
+  padding-top: 250px;
   padding-bottom: 50px;
   font-size: 55px;
 }
@@ -258,16 +238,16 @@ b, strong{
 }
 
 #myCanvas {
-  display: block;
+  display: inline-block;
   margin: auto;
-  background: #ffe4ce;
+  /*background: #ffe4ce;*/
   border: 1px solid #000000;
 }
 
 #myCanvas2 {
-  display: block;
+  display: inline-block;
   margin: auto;
-  background: #ffe4ce;
+  /*background: #ffe4ce;*/
   border: 1px solid #000000;
 }
 
@@ -307,7 +287,6 @@ b, strong{
 
 /* The slider itself */
 .slidecontainer {
-
   width: 100%;
 }
 
@@ -358,16 +337,6 @@ b, strong{
 }
 
 /* FOOTER */ 
-
-/*.footer {
-  position: relative;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  padding: 30px 0;
-  font-size: 25px;*/
-  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);*/
-/*}*/
 
 .credits {
   font-size: 20px;

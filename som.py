@@ -80,6 +80,10 @@ train_labels = pd.read_csv(train_labels_path, encoding='utf-8', dtype=np.int8, h
 test_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestLabels.txt'
 test_labels = pd.read_csv(test_labels_path, encoding='utf-8', dtype=np.int8, header=None)
 
+# Drawn input
+drawn_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/EMNIST-Kohonen-SOM/static/data/drawn.csv'
+drawn_input = pd.read_csv(drawn_path, encoding='utf-8', header=None)
+
 if args.debug:
 	print('Loaded 2/3 files')
 
@@ -164,6 +168,7 @@ for i in range(loopStartTest,loopEndTest,MAX_TEST_INPUTS_PER_CLASS):
 # Convert to NumPy Arrays
 labels = np.array(labels)
 inputs = np.array(inputs)
+drawnInput = np.array(drawn_input/12) # 336 / 28 = 12
 
 testLabels = np.array(testLabels)
 testInputs = np.array(testInputs)
@@ -224,6 +229,7 @@ init_radius = max(network_dimensions[0], network_dimensions[1]) / 2
 # Radius decay parameter - different as (possibly) different number of iterations
 time_constant = n_iterations / np.log(init_radius)
 time_constant_test = n_iterations_test / np.log(init_radius)
+time_constant_drawn = drawnInput.shape[0] / np.log(init_radius)
 
 if args.debug:
 	print('Net', type(net))
@@ -375,7 +381,7 @@ def trainSOM(inputsValues, times, timeCTE):
 
 	return(bmu_idx_arr, radiusList, learnRateList, sqDistList)
 
-def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
+def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 
 	# Declare
 	x_coords = []
@@ -507,6 +513,8 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 		print('x_test:',xPlotTest.shape)
 		print('y_test:',yPlotTest.shape)
 		print('z_test:',zPlot_test.shape)
+		print('')
+		print('BMU drawn:',bmuDrawn.shape)
 		#print(labelColor_test)
 
 	# Plot Scatterplot
@@ -600,6 +608,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	# Plot both train and test data with noise
 	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
 	plt.scatter(xPlotTestNoise, yPlotTestNoise, s=20, marker='x', facecolor=zPlot_test)
+	plt.scatter(bmuDrawn[0][0], bmuDrawn[0][0], marker='+', s=200, facecolor='black')
 	plt.title(str(n)+' train and test inputs sorted with noise')
 	plt.show()
 
@@ -745,7 +754,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels):
 	#	print('Saved train coordinates with noise')
 
 # Make graphical comparaisons of various parameters
-def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDistTrain, sqDistTest):
+def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDistTrain, sqDistTest, radiusDrawn, rateDrawn, sqDistDrawn):
 
 	# Plot radius
 	plt.title('Radius evolution')
@@ -753,6 +762,7 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 	plt.ylabel('Radius size')
 	plt.plot(radiusTrain, 'r')
 	plt.plot(radiusTest, 'b')
+	plt.plot(radiusDrawn, 'g')
 	plt.show()
 
 	# Plot learning rate
@@ -761,6 +771,7 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 	plt.ylabel('Learning rate')
 	plt.plot(learnRateTrain, 'r')
 	plt.plot(learnRateTest, 'b')
+	plt.plot(rateDrawn, 'g')
 	plt.show()
 
 	# Plot 3D distance
@@ -769,6 +780,7 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 	plt.ylabel('Smallest Distance Squared')
 	plt.plot(sqDistTrain, 'r')
 	plt.plot(sqDistTest, 'b')
+	plt.plot(sqDistDrawn, 'g')
 
 	# We have to even out the iteration steps for the graphs to be comparable
 	#step = int(chosen_inputs_per_class/chosen_test_inputs_per_class)
@@ -784,5 +796,9 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 
 bmuTrain, radiusTrain, rateTrain, sqDistTrain = trainSOM(inputs, n_iterations, time_constant)
 bmuTest, radiusTest, rateTest, sqDistTest = trainSOM(testInputs, n_iterations_test, time_constant_test)
-makeSOM(bmuTrain, labels, bmuTest, testLabels)
-plotVariables(radiusTrain, radiusTest, rateTrain, rateTest, sqDistTrain, sqDistTest)
+bmuDrawn, radiusDrawn, rateDrawn, sqDistDrawn = trainSOM(drawnInput, drawnInput.shape[0], time_constant_drawn)
+
+makeSOM(bmuTrain, labels, bmuTest, testLabels, bmuDrawn)
+plotVariables(radiusTrain, radiusTest, rateTrain, rateTest, sqDistTrain, sqDistTest, radiusDrawn, rateDrawn, sqDistDrawn)
+
+

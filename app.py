@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import render_template
 from flask import request
+from flask import jsonify
 #import som
 #import RGB
 
@@ -50,9 +51,28 @@ def twoFive():
 def three():
     return render_template('3.html')
 
-@app.route('/canvas')
+@app.route('/canvas')#, methods=['POST', 'GET'])
 def canvas():
     return render_template('canvas.html')
+
+'''@app.route('/postdata', methods=['POST', 'GET'])
+def postData():
+    if request.method == 'POST':
+        return "Test"'''
+
+@app.route('/canvaspost', methods=['GET', 'POST'])
+def canvaspost():
+    if request.method == 'GET':
+        #return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+        csv = request.files['myJSON']
+        return jsonify(
+            summary=make_summary(csv),
+            csv_name=secure_filename(csv.filename)
+        )
+    else:
+        return "Not"
+
+    return render_template("canvaspost.html")
 
 @app.route('/dataset')
 def dataset():
