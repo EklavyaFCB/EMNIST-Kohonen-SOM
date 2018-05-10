@@ -89,7 +89,7 @@ var tipMouseover = function(d) {
 var tipMouseout = function(d) {
     tooltip.transition()
         .duration(300) // ms
-        .style("opacity", 0);
+        .style("opacity", 0);pp
 };
 
 //----------------------------------------------------------------------------------------

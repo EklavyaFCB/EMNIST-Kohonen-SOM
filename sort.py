@@ -11,6 +11,10 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+#-----------------------------------------------------------------
+# CONFIG
+#-----------------------------------------------------------------
+
 # Argument Parser
 parser = argparse.ArgumentParser(description='Sort the EMNIST data in order of their class')
 parser.add_argument('-d','--debug', action='store_true', default=False, help='Print debug messages')
@@ -18,6 +22,10 @@ parser.add_argument('-c','--classes', action='store', type=int, help='Insert the
 parser.add_argument('-ip','--input_path', action='store', help='Insert the data path to the .csv file')
 parser.add_argument('-sp','--save_path', action='store', help='Insert the save path for the sorted output .csv file (do not insert the file name itself)')
 args = parser.parse_args()
+
+#-----------------------------------------------------------------
+# SET-UP
+#-----------------------------------------------------------------
 
 # Enough arguments given
 if not (args.input_path):
@@ -55,6 +63,10 @@ if (args.debug):
 	print('')
 	print('Raw data shape:', data.shape)
 	print(type(data))
+
+#-----------------------------------------------------------------
+# SORTING
+#-----------------------------------------------------------------
 
 # Sorting into classes
 # Numpy arrays are immutable, and are very inefficient for appending,
@@ -307,6 +319,10 @@ if (args.debug):
 	print('Sorted data shape:',sortedInputs.shape)
 	print('Sorted labels shape:',sortedLabels.shape)
 	# display(5,5,0)
+
+#-----------------------------------------------------------------
+# EXPORT 
+#-----------------------------------------------------------------
 
 # Make sure to change file name to not overwrite files in case you sort both training and testing files
 np.savetxt(save_path+'SortedInputs.csv', sortedInputs, fmt='%d', delimiter=',')

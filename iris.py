@@ -4,13 +4,15 @@
 
 # We're using the Iris dataset to train an ANN
 import argparse
+import sys
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.lines import Line2D
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # CONFIG
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Argument Parser for debugging
 parser = argparse.ArgumentParser(description='Make a 2D map of a multidimensional input')
@@ -18,9 +20,9 @@ parser.add_argument('-d','--debug', action='store_true', default=False, help='Pr
 parser.add_argument('-r','--rate', type=float, action='store', default=0.3, help='Choose learning rate (range: 0-1)')
 args = parser.parse_args()
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # SET-UP
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Constants
 # ======== DO NOT CHANGE ========|
@@ -33,18 +35,29 @@ chosen_inputs_per_class = 50
 n_classes = MAX_CLASSES
 
 # Learning rate (Eta), range: 0 - 1
-if (args.rate): 
-	init_learning_rate =  args.rate
-
-#init_learning_rate = 0.3
+if (args.rate):
+	if (args.rate < 0):
+		print('ERROR - The learning cannot be lower than 0.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	elif (args.rate > 1):
+		print('ERROR - The learning cannot be bigger than 1.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	else:
+		init_learning_rate =  args.rate
+elif (args.rate == 0):
+	print('ERROR - The learning cannot be equal to 0.')
+	print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+	sys.exit(1)
 
 if args.debug:
 	print("Debug mode ON")
 	print('Loading input files ...')
 
 # Raw Data
-#url = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
-data_path = 'static/data/Iris/IrisOriginal.csv'
+#data_path = 'static/data/Iris/IrisOriginal.csv'
+data_path = 'http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data'
 data = pd.read_csv(data_path, encoding='utf-8', header=None)
 
 # Add Column names
@@ -80,21 +93,21 @@ if args.debug:
 	print('Loaded labels:', type(labels))
 	print('Data normalised:', normaliseCheck)
 
-	# Variables
-	n = inputs.shape[0]
-	m = inputs.shape[1]
+# Variables
+n = inputs.shape[0]
+m = inputs.shape[1]
 
-	network_dimensions = np.array([n_classes*2,n_classes*2])		
-	n_iterations = n
+network_dimensions = np.array([n_classes*2,n_classes*2])		
+n_iterations = n
 
-	if args.debug:
-		print('n_classes:', n_classes)
-		print('n:', n)
-		print('m:', m)
-		print('Network dimensions:', network_dimensions.shape)
-		print('Number of training iterations:', n_iterations)
-		print('Initial learning rate:', init_learning_rate)
-		print('Inputs per class:', chosen_inputs_per_class)
+if args.debug:
+	print('n_classes:', n_classes)
+	print('n:', n)
+	print('m:', m)
+	print('Network dimensions:', network_dimensions.shape)
+	print('Number of training iterations:', n_iterations)
+	print('Initial learning rate:', init_learning_rate)
+	print('Inputs per class:', chosen_inputs_per_class)
 
 
 # Weight Matrix - same for training and testing as same number of classes and therefore network dimensions
@@ -111,12 +124,12 @@ if args.debug:
 	print('Initial Radius', init_radius)
 	print('Time constant', time_constant)
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # METHODS
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Find Best Matching Unit (BMU)
-def find_bmu(t, net, m):
+def findBMU(t, net, m):
 
 	# A 1D array which will contain the X,Y coordinates
 	# of the BMU for the given input vector t
@@ -144,15 +157,15 @@ def find_bmu(t, net, m):
 	return(bmu, bmu_idx, min_diff)
 
 # Decay the neighbourhood radius with time
-def decay_radius(initial_radius, i, time_constant):
+def decayRadius(initial_radius, i, time_constant):
 	return initial_radius * np.exp(-i / time_constant)
 
 # Decay the learning rate with time
-def decay_learning_rate(initial_learning_rate, i, n_iterations):
+def decayLearningRate(initial_learning_rate, i, n_iterations):
 	return initial_learning_rate * np.exp(-i / n_iterations)
 
 # Calculate the influence
-def calculate_influence(distance, radius):
+def getInfluence(distance, radius):
 	return np.exp(-distance / (2* (radius**2)))
 
 # SOM Step Learning
@@ -177,16 +190,16 @@ def trainSOM(inputsValues, times):
 
 		# ------------- BMU -------------
 		# 2. Find the chosen input vector's BMU at each step
-		#bmu, bmu_idx = find_bmu(t, net, m)
-		bmu, bmu_idx, dist = find_bmu(t, net, m)
+		#bmu, bmu_idx = findBMU(t, net, m)
+		bmu, bmu_idx, dist = findBMU(t, net, m)
 
 		bmu_idx_arr.append(bmu_idx)
 		sqDistList.append(dist)
 		
 		# ------------- DECAY -------------
 		# 3. Determine topological neighbourhood for each step
-		r = decay_radius(init_radius, i, time_constant)
-		l = decay_learning_rate(init_learning_rate, i, times)
+		r = decayRadius(init_radius, i, time_constant)
+		l = decayLearningRate(init_learning_rate, i, times)
 
 		radiusList.append(r)
 		learnRateList.append(l)
@@ -208,7 +221,7 @@ def trainSOM(inputsValues, times):
 				if w_dist <= r**2:
 					
 					# Calculate the degree of influence (based on the 2-D distance)
-					influence = calculate_influence(w_dist, r)
+					influence = getInfluence(w_dist, r)
 					
 					# Update weight:
 					# new w = old w + (learning rate * influence * delta)
@@ -299,6 +312,11 @@ def makeSOM(bmu_idx_arr):
 		print('z:', zPlot.shape)
 		print('BMUs:', bmu_idx_arr.shape)
 
+	# Legend
+	legend_elements = [ Line2D([0],[0], marker='o', color='r', label='Iris-setosa', markerfacecolor='r', markersize=5),
+                   		Line2D([0],[0], marker='o', color='g', label='Iris-versicolor', markerfacecolor='g', markersize=5),
+                   		Line2D([0],[0], marker='o', color='b', label='Iris-virginica', markerfacecolor='b', markersize=5)]
+
 	# Plot Scatterplot
 	plotSize = (n_classes * 2)
 	figSize = 5.91
@@ -307,21 +325,25 @@ def makeSOM(bmu_idx_arr):
 	# Plot nodes
 	plt.scatter(x_coords, y_coords, s=20, facecolor=zPlot)
 	plt.title(str(n)+' Inputs unsorted without noise')
+	plt.legend(handles=legend_elements, loc=1)
 	plt.show()
 
 	# Plot nodes with noise
 	plt.scatter(x_coordsNoise, y_coordsNoise, s=20, facecolor=zPlot)
 	plt.title(str(n)+' Inputs unsorted with noise')
+	plt.legend(handles=legend_elements, loc=1)
 	plt.show()
 
 	# Plot data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
 	plt.title(str(n)+' Inputs sorted without noise')
+	plt.legend(handles=legend_elements, loc=1)
 	plt.show()
 
 	# Plot data with noise
 	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
 	plt.title(str(n)+' Inputs sorted with noise')
+	plt.legend(handles=legend_elements, loc=1)
 	plt.show()
 
 	# Legend
@@ -373,24 +395,29 @@ def plotVariables(radius, learnRate, sqDist):
 	plt.title('Radius evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Radius size')
-	plt.plot(radius, 'r')
+	plt.plot(radius, 'r', label='Radius')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot learning rate
 	plt.title('Learning rate evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Learning rate')
-	plt.plot(learnRate, 'r')
+	plt.plot(learnRate, 'r', label='Learning Rate')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot 3D distance
 	plt.title('Best Matching Unit 3D Distance')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Smallest Distance Squared')
-	plt.plot(sqDist, 'r')
+	plt.plot(sqDist, 'r', label='(Squared) Distance')
+	plt.legend(loc=1)
 	plt.show()
 
-# inputs = setUp(150)
+#-----------------------------------------------------------------
+# MAIN METHOD CALLS
+#-----------------------------------------------------------------
 bmu, radius, rate, sqDist = trainSOM(inputs, 150)
 makeSOM(bmu)
 plotVariables(radius, rate, sqDist)

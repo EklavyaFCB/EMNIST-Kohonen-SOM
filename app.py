@@ -51,14 +51,9 @@ def twoFive():
 def three():
     return render_template('3.html')
 
-@app.route('/canvas')#, methods=['POST', 'GET'])
+@app.route('/canvas')
 def canvas():
     return render_template('canvas.html')
-
-'''@app.route('/postdata', methods=['POST', 'GET'])
-def postData():
-    if request.method == 'POST':
-        return "Test"'''
 
 @app.route('/canvaspost', methods=['GET', 'POST'])
 def canvaspost():

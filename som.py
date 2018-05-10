@@ -5,6 +5,7 @@
 # We're using sorted EMNIST Balanced 47 Classes data, to make a SOM
 
 import argparse
+import sys
 import datetime
 import numpy as np
 import pandas as pd
@@ -19,9 +20,9 @@ parser.add_argument('-iTr','--inputsTrain', type=int, action='store', default=20
 parser.add_argument('-iTe','--inputsTest', type=int, action='store', default=20, help='Choose number of test inputs per class (range: 0-400)')
 args = parser.parse_args()
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # CONFIG
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Constants
 # ======== DO NOT CHANGE ========|
@@ -36,16 +37,57 @@ if not len(vars(args)) > 1:
 	print('Using default values')
 
 # Number of training inputs, range: 0 - 2400
-if (args.inputsTrain):
-	chosen_inputs_per_class = args.inputsTrain
+if (args.inputsTrain): 
+	if (args.inputsTrain < 0):
+		print('ERROR - The number of training inputs cannot be lower than 0.')
+		print('Use -iTr to insert a correct number of inputs, eg: -iTr=20.')
+		sys.exit(1)
+	if (args.inputsTrain > 2400):
+		print('ERROR - The number of training inputs cannot be higher than 2400.')
+		print('Use -iTr to insert a correct number of inputs, eg: -iTr=20.')
+		sys.exit(1)
+	else:
+		chosen_inputs_per_class = args.inputsTrain
+
+elif (args.inputsTrain == 0):
+	print('ERROR - The number of training inputs cannot be equal to 0.')
+	print('Use -iTr to insert a correct number of inputs, eg: -iTr=20.')
+	sys.exit(1)
 
 # Number of testing inputs, range: 0 - 2400
-if (args.inputsTest):
-	chosen_test_inputs_per_class = args.inputsTest
+if (args.inputsTest): 
+	if (args.inputsTest < 0):
+		print('ERROR - The number of testing inputs cannot be lower than 0.')
+		print('Use -iTe to insert a correct number of inputs, eg: -iTe=20.')
+		sys.exit(1)
+	if (args.inputsTest > 2400):
+		print('ERROR - The number of testing inputs cannot be higher than 2400.')
+		print('Use -iTe to insert a correct number of inputs, eg: -iTe=20.')
+		sys.exit(1)
+	else:
+		chosen_test_inputs_per_class = args.inputsTest
+
+elif (args.inputsTest == 0):
+	print('ERROR - The number of testing inputs cannot be equal to 0.')
+	print('Use -iTe to insert a correct number of inputs, eg: -iTe=20.')
+	sys.exit(1)
 
 # Learning rate (Eta), range: 0 - 1
-if (args.rate): 
-	init_learning_rate =  args.rate
+if (args.rate):
+	if (args.rate < 0):
+		print('ERROR - The learning cannot be lower than 0.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	elif (args.rate > 1):
+		print('ERROR - The learning cannot be bigger than 1.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	else:
+		init_learning_rate =  args.rate
+elif (args.rate == 0):
+	print('ERROR - The learning cannot be equal to 0.')
+	print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+	sys.exit(1)
 
 # Number of classes
 if (args.type == 'd'): # Digits
@@ -54,35 +96,43 @@ elif (args.type == 'l'): # Letters
 	n_classes = MAX_CLASSES-10
 elif (args.type == 'c'): # Combined
 	n_classes = MAX_CLASSES
+else:
+	print('ERROR - Invalid class type.')
+	print('Use -t to insert the correct class type, eg: -t=d.')
+	sys.exit(1)
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # SET-UP
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 if args.debug:
 	print("Debug mode ON")
 	print('Loading input files ...')
 
 # Inputs (Sorted inputs of all 47 classes)
-train_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainInputs.csv'
+#train_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainInputs.csv'
+train_inputs_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/Train.csv'
 train_inputs = pd.read_csv(train_inputs_path, encoding='utf-8', header=None)
 
-test_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestInputs.csv'
+#test_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestInputs.csv'
+test_inputs_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/Test.csv'
 test_inputs = pd.read_csv(test_inputs_path, encoding='utf-8', header=None)
 
 if args.debug:
 	print('Loaded 1/3 files')
 
 # Labels
-train_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainLabels.txt'
+#train_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainLabels.txt'
+train_labels_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/TrainLabels.txt'
 train_labels = pd.read_csv(train_labels_path, encoding='utf-8', dtype=np.int8, header=None)
 
-test_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestLabels.txt'
+#test_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestLabels.txt'
+test_labels_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/TestLabels.txt'
 test_labels = pd.read_csv(test_labels_path, encoding='utf-8', dtype=np.int8, header=None)
 
 # Drawn input
-drawn_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/EMNIST-Kohonen-SOM/static/data/drawn.csv'
-drawn_input = pd.read_csv(drawn_path, encoding='utf-8', header=None)
+# drawn_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/EMNIST-Kohonen-SOM/static/data/drawn.csv'
+# drawn_input = pd.read_csv(drawn_path, encoding='utf-8', header=None)
 
 if args.debug:
 	print('Loaded 2/3 files')
@@ -168,7 +218,7 @@ for i in range(loopStartTest,loopEndTest,MAX_TEST_INPUTS_PER_CLASS):
 # Convert to NumPy Arrays
 labels = np.array(labels)
 inputs = np.array(inputs)
-drawnInput = np.array(drawn_input/12) # 336 / 28 = 12
+# drawnInput = np.array(drawn_input/12) # 336 / 28 = 12
 
 testLabels = np.array(testLabels)
 testInputs = np.array(testInputs)
@@ -229,7 +279,7 @@ init_radius = max(network_dimensions[0], network_dimensions[1]) / 2
 # Radius decay parameter - different as (possibly) different number of iterations
 time_constant = n_iterations / np.log(init_radius)
 time_constant_test = n_iterations_test / np.log(init_radius)
-time_constant_drawn = drawnInput.shape[0] / np.log(init_radius)
+# time_constant_drawn = drawnInput.shape[0] / np.log(init_radius)
 
 if args.debug:
 	print('Net', type(net))
@@ -237,9 +287,9 @@ if args.debug:
 	print('Time constant', time_constant)
 	print('Time constant test', time_constant_test)
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # METHODS
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Saving files with timestamp
 def timeStamped(fmt='%Y-%m-%d-%H-%M-%S'):
@@ -264,7 +314,7 @@ def timeStamped(fmt='%Y-%m-%d-%H-%M-%S'):
 
 
 # Find Best Matching Unit (BMU)
-def find_bmu(t, net, m):
+def findBMU(t, net, m):
 
 	# A 1D array which will contain the X,Y coordinates
 	# of the BMU for the given input vector t
@@ -292,15 +342,15 @@ def find_bmu(t, net, m):
 	return(bmu, bmu_idx, min_diff)
 
 # Decay the neighbourhood radius with time
-def decay_radius(initial_radius, i, time_constant):
+def decayRadius(initial_radius, i, time_constant):
 	return initial_radius * np.exp(-i / time_constant)
 
 # Decay the learning rate with time
-def decay_learning_rate(initial_learning_rate, i, n_iterations):
+def decayLearningRate(initial_learning_rate, i, n_iterations):
 	return initial_learning_rate * np.exp(-i / n_iterations)
 
 # Calculate the influence
-def calculate_influence(distance, radius):
+def getInfluence(distance, radius):
 	return np.exp(-distance / (2* (radius**2)))
 
 
@@ -326,16 +376,16 @@ def trainSOM(inputsValues, times, timeCTE):
 
 		# ------------- BMU -------------
 		# 2. Find the chosen input vector's BMU at each step
-		#bmu, bmu_idx = find_bmu(t, net, m)
-		bmu, bmu_idx, dist = find_bmu(t, net, m)
+		#bmu, bmu_idx = findBMU(t, net, m)
+		bmu, bmu_idx, dist = findBMU(t, net, m)
 
 		bmu_idx_arr.append(bmu_idx)
 		sqDistList.append(dist)
 		
 		# ------------- DECAY -------------
 		# 3. Determine topological neighbourhood for each step
-		r = decay_radius(init_radius, i, timeCTE)
-		l = decay_learning_rate(init_learning_rate, i, times)
+		r = decayRadius(init_radius, i, timeCTE)
+		l = decayLearningRate(init_learning_rate, i, times)
 
 		radiusList.append(r)
 		learnRateList.append(l)
@@ -357,7 +407,7 @@ def trainSOM(inputsValues, times, timeCTE):
 				if w_dist <= r**2:
 					
 					# Calculate the degree of influence (based on the 2-D distance)
-					influence = calculate_influence(w_dist, r)
+					influence = getInfluence(w_dist, r)
 					
 					# Update weight:
 					# new w = old w + (learning rate * influence * delta)
@@ -381,7 +431,7 @@ def trainSOM(inputsValues, times, timeCTE):
 
 	return(bmu_idx_arr, radiusList, learnRateList, sqDistList)
 
-def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
+def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels): #, bmuDrawn):
 
 	# Declare
 	x_coords = []
@@ -514,7 +564,7 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 		print('y_test:',yPlotTest.shape)
 		print('z_test:',zPlot_test.shape)
 		print('')
-		print('BMU drawn:',bmuDrawn.shape)
+		#print('BMU drawn:',bmuDrawn.shape)
 		#print(labelColor_test)
 
 	# Plot Scatterplot
@@ -522,9 +572,27 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	#figSize = 5.91
 	#plt.figure(figsize=(figSize, figSize))
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
+	# Legend
+	#-----------------------------------------------------------------
+
+	if (args.type == 'd'): # Digits
+		plotLegend = 10
+	elif (args.type == 'l'): # Letters
+		plotLegend = MAX_CLASSES-10
+	elif (args.type == 'c'): # Combined
+		plotLegend = MAX_CLASSES
+
+	for i in range(plotLegend):
+		plt.title('Legend of each class')
+		plt.scatter(i, 1, s=100, facecolor=labelColor[i], edgecolor=labelColor[i])
+
+	plt.yticks([])
+	plt.show()
+
+	#-----------------------------------------------------------------
 	# Random train nodes
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot train random nodes without noise
 	plt.scatter(x_coords, y_coords, s=20, marker='o', facecolor=zPlot)
@@ -536,9 +604,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	plt.title(str(n)+' train inputs unsorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Random test nodes
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot test random nodes without noise
 	plt.scatter(x_coordsTest, y_coordsTest, s=20, marker='x', facecolor=zPlot_test)
@@ -550,9 +618,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	plt.title(str(n_test)+' test inputs unsorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Random train and test nodes
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot train and test random nodes without noise
 	plt.scatter(x_coords, y_coords, s=20, marker='o', facecolor=zPlot)
@@ -566,9 +634,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	plt.title(str(n+n_test)+' train and test inputs unsorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Train data
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot train data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
@@ -580,9 +648,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	plt.title(str(n)+' train inputs sorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Test data
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot test data without noise
 	plt.scatter(xPlotTest, yPlotTest, s=20, marker='x', facecolor=zPlot_test)
@@ -594,9 +662,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	plt.title(str(n)+' test inputs sorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Train and Test data
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Plot both train and test data without noise
 	plt.scatter(xPlot, yPlot, s=20, marker='o', facecolor=zPlot)
@@ -608,13 +676,13 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	# Plot both train and test data with noise
 	plt.scatter(xPlotNoise, yPlotNoise, s=20, marker='o', facecolor=zPlot)
 	plt.scatter(xPlotTestNoise, yPlotTestNoise, s=20, marker='x', facecolor=zPlot_test)
-	plt.scatter(bmuDrawn[0][0], bmuDrawn[0][0], marker='+', s=200, facecolor='black')
+	#plt.scatter(bmuDrawn[0][0], bmuDrawn[0][0], marker='+', s=200, facecolor='black')
 	plt.title(str(n)+' train and test inputs sorted with noise')
 	plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# View all plots together
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	#fig, ax = plt.subplots(2, 5, sharex='col', sharey='row')
 
@@ -625,9 +693,6 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	        #ax[i, j].axis('off')
 	        #x+=1
 	#plt.show()
-	
-	#for i in range(n):
-	#	plt.text(xPlot[0], yPlot[1], labels[i], ha='center', va='center')
 
 	#plt.legend(handles=[n])
 	#plt.xlim(-1, plotSize)
@@ -636,9 +701,9 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	#plt.title('Train: ' + str(args.inputsTrain*n_classes) + ', Test: ' + str(args.inputsTest*n_classes))
 	#plt.show()
 
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 	# Save all plots as .CSVs
-	#-----------------------------------------------------------------------------------
+	#-----------------------------------------------------------------
 
 	# Declare
 	randTrain = np.zeros((n,6))
@@ -754,33 +819,36 @@ def makeSOM(bmu_idx_arr, labels, bmu_idx_arr_test, testLabels, bmuDrawn):
 	#	print('Saved train coordinates with noise')
 
 # Make graphical comparaisons of various parameters
-def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDistTrain, sqDistTest, radiusDrawn, rateDrawn, sqDistDrawn):
+def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDistTrain, sqDistTest): #, radiusDrawn, rateDrawn, sqDistDrawn):
 
 	# Plot radius
 	plt.title('Radius evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Radius size')
-	plt.plot(radiusTrain, 'r')
-	plt.plot(radiusTest, 'b')
-	plt.plot(radiusDrawn, 'g')
+	plt.plot(radiusTrain, 'r', label='Training Radius')
+	plt.plot(radiusTest, 'b', label='Testing Radius')
+	#plt.plot(radiusDrawn, 'g')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot learning rate
 	plt.title('Learning rate evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Learning rate')
-	plt.plot(learnRateTrain, 'r')
-	plt.plot(learnRateTest, 'b')
-	plt.plot(rateDrawn, 'g')
+	plt.plot(learnRateTrain, 'r', label='Training Learning Rate')
+	plt.plot(learnRateTest, 'b', label='Testing Learning Rate')
+	#plt.plot(rateDrawn, 'g')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot 3D distance
 	plt.title('Best Matching Unit 3D Distance')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Smallest Distance Squared')
-	plt.plot(sqDistTrain, 'r')
-	plt.plot(sqDistTest, 'b')
-	plt.plot(sqDistDrawn, 'g')
+	plt.plot(sqDistTrain, 'r', label='Training (Squared) Distance')
+	plt.plot(sqDistTest, 'b', label='Testing (Squared) Distance')
+	#plt.plot(sqDistDrawn, 'g')
+	plt.legend(loc=1)
 
 	# We have to even out the iteration steps for the graphs to be comparable
 	#step = int(chosen_inputs_per_class/chosen_test_inputs_per_class)
@@ -793,12 +861,13 @@ def plotVariables(radiusTrain, radiusTest, learnRateTrain, learnRateTest, sqDist
 	
 	plt.show()
 
+#-----------------------------------------------------------------
+# MAIN METHOD CALLS
+#-----------------------------------------------------------------
 
 bmuTrain, radiusTrain, rateTrain, sqDistTrain = trainSOM(inputs, n_iterations, time_constant)
 bmuTest, radiusTest, rateTest, sqDistTest = trainSOM(testInputs, n_iterations_test, time_constant_test)
-bmuDrawn, radiusDrawn, rateDrawn, sqDistDrawn = trainSOM(drawnInput, drawnInput.shape[0], time_constant_drawn)
+# bmuDrawn, radiusDrawn, rateDrawn, sqDistDrawn = trainSOM(drawnInput, drawnInput.shape[0], time_constant_drawn)
 
-makeSOM(bmuTrain, labels, bmuTest, testLabels, bmuDrawn)
-plotVariables(radiusTrain, radiusTest, rateTrain, rateTest, sqDistTrain, sqDistTest, radiusDrawn, rateDrawn, sqDistDrawn)
-
-
+makeSOM(bmuTrain, labels, bmuTest, testLabels) #, bmuDrawn)
+plotVariables(radiusTrain, radiusTest, rateTrain, rateTest, sqDistTrain, sqDistTest) #, radiusDrawn, rateDrawn, sqDistDrawn)

@@ -5,14 +5,15 @@
 # We're using sorted EMNIST Balanced 47 Classes data, to make a SOM
 
 import argparse
+import sys
 import math
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # CONFIG
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Argument Parser for debugging
 parser = argparse.ArgumentParser(description='Make a 2D map of a multidimensional input')
@@ -21,83 +22,107 @@ parser.add_argument('-r','--rate', type=float, action='store', default=0.3, help
 parser.add_argument('-i','--inputs', type=int, action='store', default=20, help='Choose number of train inputs per class (range: 0-2400)')
 args = parser.parse_args()
 
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # SET-UP
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
-def setUp(n_iterations):
+if (args.inputs): 
+	if (args.inputs < 0):
+		print('ERROR - The number of inputs cannot be lower than 0.')
+		print('Use -i to insert the correct number of inputs, eg: -i=20.')
+		sys.exit(1)
+	else:
+		inputsQuantity = args.inputs
 
-	# Global variables
-	global n_classes, INPUTS_PER_CLASS, n, m, net, data, inputs
-	global network_dimensions, init_radius, init_learning_rate, time_constant
+elif (args.inputs == 0):
+	print('ERROR - The number of inputs cannot be equal to 0.')
+	print('Use -i to insert the correct number of inputs, eg: -i=20.')
+	sys.exit(1)
 
-	# Constants
-	# ======== DO NOT CHANGE ========|
-	INPUTS_MAX_VALUE = 255			#|
-	MAX_CLASSES = 10				#|
-	INPUTS_PER_CLASS = n_iterations	#|
-	# =========DO NOT CHANG==========|
+# Constants
+# ======== DO NOT CHANGE ========|
+MAX_CLASSES = 10				#|
+INPUTS_PER_CLASS = inputsQuantity#|
+# =========DO NOT CHANGE=========|
 
-	if args.debug:
-		print("Debug mode ON")
-		print('Loading input files ...')
+if args.debug:
+	print("Debug mode ON")
+	print('Loading input files ...')
 
-	# We can generate random vectors in range [0-255] with the three values R,G,B
-	data = np.random.randint(0, 255, (INPUTS_PER_CLASS, 3))
+# We can generate random vectors in range [0-255] with the three values R,G,B
+data = np.random.randint(0, 255, (INPUTS_PER_CLASS, 3))
 
-	# Normalise and convert from list to array
-	inputs = []
-	inputs = data/INPUTS_MAX_VALUE
-	inputs = np.array(inputs)
+INPUTS_MAX_VALUE = data.max()
 
-	if args.debug:
-		print('Generated inputs:', type(inputs))
+# Normalise and convert from list to array
+inputs = []
+inputs = data/INPUTS_MAX_VALUE
+inputs = np.array(inputs)
 
-	# Variables
-	n = inputs.shape[0]
-	m = inputs.shape[1]
+if args.debug:
+	print('Generated inputs:', type(inputs))
+	if (inputs.max()==1 and inputs.min()==0):
+		normaliseCheck = True
+	else:
+		normaliseCheck = False
+	print('Data normalised:', normaliseCheck)
 
-	n_classes = MAX_CLASSES
-	network_dimensions = np.array([n_classes*2,n_classes*2])
+# Variables
+n = inputs.shape[0]
+m = inputs.shape[1]
 
-	n_iterations = n
+n_classes = MAX_CLASSES
+network_dimensions = np.array([n_classes*2,n_classes*2])
 
-	# Learning rate (Eta), range: 0 - 1
-	if (args.rate): 
+n_iterations = n
+
+# Learning rate (Eta), range: 0 - 1
+if (args.rate):
+	if (args.rate < 0):
+		print('ERROR - The learning cannot be lower than 0.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	elif (args.rate > 1):
+		print('ERROR - The learning cannot be bigger than 1.')
+		print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+		sys.exit(1)
+	else:
 		init_learning_rate =  args.rate
+elif (args.rate == 0):
+	print('ERROR - The learning cannot be equal to 0.')
+	print('Use -r to insert the correct learning rate, eg: -r=0.3.')
+	sys.exit(1)
 
-	if args.debug:
-		print('n_classes:', n_classes)
-		print('n:', n)
-		print('m:', m)
-		print('Network dimensions:', network_dimensions.shape)
-		print('Number of training iterations:', n_iterations)
-		print('Initial learning rate:', init_learning_rate)
+if args.debug:
+	print('n_classes:', n_classes)
+	print('n:', n)
+	print('m:', m)
+	print('Network dimensions:', network_dimensions.shape)
+	print('Number of training iterations:', n_iterations)
+	print('Initial learning rate:', init_learning_rate)
 
-	# Variables
+# Variables
 
-	# Weight Matrix - same for training and testing as same number of classes and therefore network dimensions
-	net = np.random.random((network_dimensions[0], network_dimensions[1], m))
+# Weight Matrix - same for training and testing as same number of classes and therefore network dimensions
+net = np.random.random((network_dimensions[0], network_dimensions[1], m))
 
-	# Initial Radius (sigma) for the neighbourhood - same for tranining and testing as same network dimensions
-	init_radius = max(network_dimensions[0], network_dimensions[1]) / 2
+# Initial Radius (sigma) for the neighbourhood - same for tranining and testing as same network dimensions
+init_radius = max(network_dimensions[0], network_dimensions[1]) / 2
 
-	# Radius decay parameter - different as (possibly) different number of iterations
-	time_constant = n_iterations / np.log(init_radius)
+# Radius decay parameter - different as (possibly) different number of iterations
+time_constant = n_iterations / np.log(init_radius)
 
-	if args.debug:
-		print('Net', type(net))
-		print('Initial Radius', init_radius)
-		print('Time constant', time_constant)
+if args.debug:
+	print('Net', type(net))
+	print('Initial Radius', init_radius)
+	print('Time constant', time_constant)
 
-	return inputs
-
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 # METHODS
-#----------------------------------------------------------------------------------------
+#-----------------------------------------------------------------
 
 # Find Best Matching Unit (BMU)
-def find_bmu(t, net, m):
+def findBMU(t, net, m):
 
 	# A 1D array which will contain the X,Y coordinates
 	# of the BMU for the given input vector t
@@ -125,15 +150,15 @@ def find_bmu(t, net, m):
 	return(bmu, bmu_idx, min_diff)
 
 # Decay the neighbourhood radius with time
-def decay_radius(initial_radius, i, time_constant):
+def decayRadius(initial_radius, i, time_constant):
 	return initial_radius * np.exp(-i / time_constant)
 
 # Decay the learning rate with time
-def decay_learning_rate(initial_learning_rate, i, n_iterations):
+def decayLearningRate(initial_learning_rate, i, n_iterations):
 	return initial_learning_rate * np.exp(-i / n_iterations)
 
 # Calculate the influence
-def calculate_influence(distance, radius):
+def getInfluence(distance, radius):
 	return np.exp(-distance / (2* (radius**2)))
 
 # SOM Step Learning
@@ -158,16 +183,16 @@ def trainSOM(inputsValues, times):
 
 		# ------------- BMU -------------
 		# 2. Find the chosen input vector's BMU at each step
-		#bmu, bmu_idx = find_bmu(t, net, m)
-		bmu, bmu_idx, dist = find_bmu(t, net, m)
+		#bmu, bmu_idx = findBMU(t, net, m)
+		bmu, bmu_idx, dist = findBMU(t, net, m)
 
 		bmu_idx_arr.append(bmu_idx)
 		sqDistList.append(dist)
 		
 		# ------------- DECAY -------------
 		# 3. Determine topological neighbourhood for each step
-		r = decay_radius(init_radius, i, time_constant)
-		l = decay_learning_rate(init_learning_rate, i, times)
+		r = decayRadius(init_radius, i, time_constant)
+		l = decayLearningRate(init_learning_rate, i, times)
 
 		radiusList.append(r)
 		learnRateList.append(l)
@@ -189,7 +214,7 @@ def trainSOM(inputsValues, times):
 				if w_dist <= r**2:
 					
 					# Calculate the degree of influence (based on the 2-D distance)
-					influence = calculate_influence(w_dist, r)
+					influence = getInfluence(w_dist, r)
 					
 					# Update weight:
 					# new w = old w + (learning rate * influence * delta)
@@ -220,8 +245,8 @@ def makeSOM(bmu_idx_arr):
 	x_coords = []
 	y_coords = []
 
-	x_coords = np.random.randint(0, 20, INPUTS_PER_CLASS)
-	y_coords = np.random.randint(0, 20, INPUTS_PER_CLASS)
+	x_coords = np.random.randint(0, network_dimensions[0], INPUTS_PER_CLASS)
+	y_coords = np.random.randint(0, network_dimensions[0], INPUTS_PER_CLASS)
 
 	x_coords = np.array(x_coords)
 	y_coords = np.array(y_coords)
@@ -347,29 +372,30 @@ def plotVariables(radius, learnRate, sqDist):
 	plt.title('Radius evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Radius size')
-	plt.plot(radius, 'r')
+	plt.plot(radius, 'r', label='Radius')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot learning rate
 	plt.title('Learning rate evolution')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Learning rate')
-	plt.plot(learnRate, 'r')
+	plt.plot(learnRate, 'r', label='Learning Rate')
+	plt.legend(loc=1)
 	plt.show()
 
 	# Plot 3D distance
 	plt.title('Best Matching Unit 3D Distance')
 	plt.xlabel('Number of iterations')
 	plt.ylabel('Smallest Distance Squared')
-	plt.plot(sqDist, 'r')
+	plt.plot(sqDist, 'r', label='(Squared) Distance')
+	plt.legend(loc=1)
 	plt.show()
 
-
-# Main
-if (args.inputs): 
-	inputsQuantity =  args.inputs
-
-inputs = setUp(inputsQuantity)
+#-----------------------------------------------------------------
+# MAIN METHODS CALL
+#-----------------------------------------------------------------
+#inputs = setUp(inputsQuantity)
 bmu, radius, rate, sqDist = trainSOM(inputs, inputsQuantity)
 makeSOM(bmu)
 plotVariables(radius, rate, sqDist)

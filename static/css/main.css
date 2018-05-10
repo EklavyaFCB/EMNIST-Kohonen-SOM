@@ -240,14 +240,14 @@ b, strong{
 #myCanvas {
   display: inline-block;
   margin: auto;
-  /*background: #ffe4ce;*/
+  background: #ffe4ce;
   border: 1px solid #000000;
 }
 
 #myCanvas2 {
   display: inline-block;
   margin: auto;
-  /*background: #ffe4ce;*/
+  background: #ffe4ce;
   border: 1px solid #000000;
 }
 
@@ -304,6 +304,12 @@ b, strong{
 
 .slider:hover {
   opacity: 1;
+}
+
+.dataset {
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 /* Slider circle */

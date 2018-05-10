@@ -31,6 +31,9 @@ var bgOST;
 var len;
 var myJSON;
 
+var canvasIndImage;
+var contextIndImg;
+
 //----------------------------------------------------------------------------------------
 // SET-UPS
 //----------------------------------------------------------------------------------------
@@ -55,6 +58,9 @@ function setUpCanvas() {
   canvas = document.getElementById('myCanvas');
   ctx = canvas.getContext('2d');
   len = canvas.width; // 336
+
+  canvasIndImage = document.getElementById("myCanvas2");      
+  contextIndImg = canvasIndImage.getContext("2d");
 
   drawable = false;
   //drawGrid();
@@ -107,21 +113,21 @@ function changeVol() {
 
   if (muted) { // Turning sound ON
     volIcon.src = "static/images/volume/shadow/3.png";
-    if (initial) {
+    if (initial) { // Start playing
       bgOST.play();
-      //console.log("Start playing");
+      // Switch
       initial = !initial;
-    } else {
+    } else { // Resume playing 
       bgOST.mute(false);
-      //console.log("Resume playing");
+      
     }
     
   } else { // Turning sound OFF
     volIcon.src = "static/images/volume/shadow/1.png";
     bgOST.mute(true);
-    //console.log("Stop playing");
   }
 
+  // Switch
   muted = !muted;
 }
 
@@ -247,7 +253,7 @@ function clearCanvas(callType) {
   
   if (typeof ctx2 !== 'undefined') {
     //ctx2.clearRect(0, 0, myCanvas.width, myCanvas.height);
-    canvas.width = canvas.width;
+    canvasIndImage.width = canvasIndImage.width;
   }
 
   xArr = [];
@@ -271,8 +277,7 @@ function clearCanvas(callType) {
 function drawLine(x, y, isDown) {
   if (isDown){
     // HTML Line properties
-    //ctx.strokeStyle = "#329894";
-    ctx.strokeStyle = "#000000";
+    ctx.strokeStyle = "#329894";
     ctx.lineJoin = "round";
     ctx.lineWidth = 20;
 
@@ -336,22 +341,6 @@ function reDraw() {
   }
 }
 
-/*function drawTable() {
-  // Grid
-  var grid = document.createElement('table');
-  grid.setAttribute('id', 't01');
-  grid.setAttribute('align', 'center');
-
-  for (var i=1; i<rows+1; i++ ) {
-    var tr = grid.insertRow();
-    for (var j=1; j<cols+1; j++) {
-      var td = tr.insertCell();
-    }
-  }
-  document.getElementById("myCanvas").appendChild(grid);
-  console.log("appended")
-}*/
-
 // Submit input
 function carry() {
   info.textContent = "Submitted";
@@ -359,31 +348,18 @@ function carry() {
   //console.log(" "+xArr);
   //console.log(" "+yArr);
 
-  /*********************
-  *** GET IMAGE DATA *** 
-  **********************/
+
+  // Get Image Data
   console.log("Getting Image Data");
 
   // Get ImageData to transform the image to array of pixels
   var imageDataOriginal = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-  // The Image contains 160,000 (400 X 400) pixels.
-  // The ImageDataOriginal contains 160,000 * 4 rows.
-  // Each 4 rows is one pixel, row 0 is pixel 1 R channel (Red)
-  //                           row 1 is pixel 1 G channel (Green)
-  //                           row 2 is pixel 1 B channel (Blue)
-  //                           row 3 is pixel 1 A channel (Alpha, transparency)
-
-  // Iterate through the array and get only the Alpha channel, which is 255 for black and 0 for white
+  // Iterate through the array and get only the channel which is 255 for black and 0 for white
   var imageArrayOriginal = [];
   for (var i = 0; i<(len*len); i++) {
     imageArrayOriginal[i] = imageDataOriginal.data[(i*4)+3];
   }
-
-  /****************************
-  *** GET INDIVIDUAL DIGITS *** 
-  *****************************/  
-  console.log("Getting Individual Digits");
 
   // Separate different digits by grouping adjacent pixels            
   var k = 1;  
@@ -418,11 +394,10 @@ function carry() {
               }
 
               // Remove duplicated from array; decrease count k
-              if (arrayToMerge.length > 1) {                            
+              if (arrayToMerge.length > 1) {
                   arrayToMerge = Array.from(new Set(arrayToMerge));
                   k--;
               };
-
 
               // Merge adjacent arrays into the same digit; and clear that array
               for (var f = 1; f < arrayToMerge.length ; f++) {
@@ -438,7 +413,6 @@ function carry() {
       }
   };
 
-
   // Check which arrays are valid digits (length > 0); those that are length 0 are temporary arrays
   var validaArrays = [];
   for (var i = 1;  i < k; i++){
@@ -447,7 +421,7 @@ function carry() {
       }
   }
 
-  //// Process Neural Network for each digit
+  // Process Neural Network for each digit
   for (var i = 0; i < validaArrays.length; i++){
     console.log("Calling processing function");
     processIndividualImage(window['arrayN' + validaArrays[i]]);
@@ -456,15 +430,9 @@ function carry() {
 
 function processIndividualImage(arrayToProcess) {
 
-  console.log("Processing Individually");
-
-  /*********************
-  *** PROCESS IMAGE  *** 
-  **********************/
+  // Process image
 
   // Use hidden canvas to put indiviual digit
-  var canvasIndImage = document.getElementById("myCanvas2");      
-  var contextIndImg = canvasIndImage.getContext("2d");
   contextIndImg.clearRect(0, 0, canvasIndImage.width, canvasIndImage.height);
 
   // Insert array digit into the image data; get columns and rows; put image on canvas
@@ -475,9 +443,9 @@ function processIndividualImage(arrayToProcess) {
       imageDataCopy.data[(arrayToProcess[j])*4+3] = 255;                
       columnArray.push(Math.floor(arrayToProcess[j]/len));
       rowArray.push(arrayToProcess[j]%len);
-  }         
-  contextIndImg.putImageData(imageDataCopy,0,0);
+  }
 
+  contextIndImg.putImageData(imageDataCopy,0,0);
 
   // Get the image min and max x and y; Calculate the width and height
   var minX = Math.min.apply(null, rowArray);
@@ -487,11 +455,7 @@ function processIndividualImage(arrayToProcess) {
   var originalWidth = maxX - minX;
   var originalHeight = maxY - minY;
 
-
-  // To normalize the image and make it similar to the training dataset:
   // Scale the image to an 18 x 18 pixel and center it into a 28 x 28 canvas
-  // The largest between the width and height will be scaled to 18 pixel
-  // The other will be reduced by the same scale, to preserve original aspect ratio
   var scaleRed;
   if (originalHeight > originalWidth){
       scaleRed = originalHeight/18;
@@ -500,8 +464,8 @@ function processIndividualImage(arrayToProcess) {
       scaleRed = originalWidth/18;
   }
 
-
-  // Calculate a new Width and Height and new X and Y start positions, to center the image in a 28 x 28 pixel
+  // Calculate new width & height, and new X & Y start positions
+  // To center the image in a 28 x 28 pixel
   var newWidth = originalWidth/scaleRed;
   var newHeight = originalHeight/scaleRed;
   var newXstart = (28 - newWidth)/2;
@@ -516,22 +480,17 @@ function processIndividualImage(arrayToProcess) {
   contextHidden.clearRect(0, 0, canvasHidden.width, canvasHidden.height);
   contextHidden.drawImage(canvasIndImage, minX, minY, originalWidth, originalHeight, newXstart, newYstart, newWidth, newHeight);
 
-
   // Get the Image Data from the new scaled, centered, 28 x 28 pixel image
-  // Again, get the Alpha Channel only, but this time also normalize it by dividing it to the maximum value of 255
   var imageData2 = contextHidden.getImageData(0, 0, 28,28);
   processedImage = [];
   for (var i = 0; i<784; i++){
       processedImage[i] = parseFloat((imageData2.data[(i*4)+3]).toFixed(10));
   }
 
-  console.log("processedImage");
   console.log(processedImage);
 
   // Convert to JSON
   myJSON = JSON.stringify(processedImage);
-
-  console.log("processedImage csv");
   console.log(myJSON);
 
 }
