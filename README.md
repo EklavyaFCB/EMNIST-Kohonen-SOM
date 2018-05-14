@@ -59,9 +59,18 @@ optional arguments :
 
 Samples commands:
 ```
-$ Python3 RGB.py -d -r=0.8 -inputs=1000
+$ Python3 RGB.py -d -r=0.8 -i=1000
 $ Python3 iris.py -d -r=0.3
 $ Python3 som.py -d-r=0.3 -iTr=100 -iTe=100 -t=d
+```
+Where:
+```
+-d is the debug flag
+-i is the number of inputs
+-r is the learning rate
+-iTr is the number of training inputs
+-iTe is the number of testing inputs
+-t is the digity, letters, or combined flag
 ```
 
 ## Running Flask
