@@ -23,10 +23,12 @@ $ pip3 install Matplotlib
 ```
 
 The following used libraries are natively pre-installed in Python, but are nonetheless listed below:
+
+```
 • argsparse 
 • sys
 • datetime
-
+```
 ## Virtual Environments
 
 
