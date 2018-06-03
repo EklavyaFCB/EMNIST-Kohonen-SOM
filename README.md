@@ -35,9 +35,8 @@ The following used libraries are natively pre-installed in Python, but are nonet
 If necessary, virtual environments can be used to keep the libraries installed for the entire working machine seperate from those simply required for a specific task. This ensures that the libraries for this project don’t get change or mix up with the development PC’s native Python installation.
 
 ```
-$ Navigate to ~\myPath\EMNIST-Kohonen-SOM\ 
 $ pip3 install virtualenv
-$ cd myPath
+$ cd ~\myPath\EMNIST-Kohonen-SOM\
 $ virtualenv myFolder 
 $ source myFolder/bin/activate 
 $ pip3 install myPackages
@@ -72,7 +71,7 @@ Where:
 -r is the learning rate
 -iTr is the number of training inputs
 -iTe is the number of testing inputs
--t is the digity, letters, or combined flag
+-t is the flag to choose between digits (d), letters (l), or combined (c)
 ```
 
 ## Running Flask
