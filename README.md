@@ -36,7 +36,7 @@ If necessary, virtual environments can be used to keep the libraries installed f
 
 ```
 $ pip3 install virtualenv
-$ cd ~\myPath\EMNIST-Kohonen-SOM\
+$ cd ~/myPath/EMNIST-Kohonen-SOM/
 $ virtualenv myFolder 
 $ source myFolder/bin/activate 
 $ pip3 install myPackages
