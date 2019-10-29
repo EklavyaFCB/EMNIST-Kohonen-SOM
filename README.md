@@ -82,3 +82,12 @@ $ python3 app.py
 *Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
 ```
 And then on a browser simply navigate to: `http://127.0.0.1:5000`. The website is now viewable.
+
+## Sample Visualisation
+Before:
+![Before clustering](before.png)
+After:
+![After clustering](after.png)
+
+On the entier EMNIST dataset (of 47 classes):
+![EMNIST clustering](AllLetters.png)
