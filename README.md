@@ -1,5 +1,8 @@
 # EMNIST-Kohonen-SOM
 
+### Note
+Update: the EMNIST dataset is no longer hosted on my University server (for som.py). It has to be re-downloaded, sorted and saved. The `train_inputs_path` and `test_inputs_path` variables will need to be linked to the final .csv file.
+
 ## Goal
 Use Kohonen's algorithm to make a Self Organising Maps for 3 different datasets:
 
