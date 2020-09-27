@@ -1,9 +1,6 @@
 # EMNIST-Kohonen-SOM
 
-### Note
-Update: the EMNIST dataset is no longer hosted on my University server (for som.py). It has to be re-downloaded, sorted and saved. The `train_inputs_path` and `test_inputs_path` variables will need to be linked to the final .csv file.
-
-## Goal
+# Goal
 Use Kohonen's algorithm to make a Self Organising Maps for 3 different datasets:
 
 - RGB dataset
@@ -14,15 +11,22 @@ The principal goal of this project is the implementation of a Kohonen Network as
 
 The aim is to provide an in-depth study of Kohonen’s algorithm, and present insights of its properties, by designing and implementing a complete and functional model. 
 
+# Install
+
+## Data
+The balanced EMNIST dataset can be downloaded from [here](https://drive.google.com/drive/folders/14CQxzXz2zGFFW0kkmSbJ_gH50O6bha3a?usp=sharing).
+
+Please download the `Sorted` folder, and place it in `EMNIST-Kohonen-SOM/static/data/` for `som.py` to work.
+
 ## Libraries
 
 To execute the attached scripts, Flask, NumPy, Pandas, Matplotlib are required as a framework.
 
 ```
-$ pip3 install Flask
-$ pip3 install NumPy
-$ pip3 install Pandas
-$ pip3 install Matplotlib
+$ pip3 install flask
+$ pip3 install numpy
+$ pip3 install pandas
+$ pip3 install matplotlib
 ```
 
 The following used libraries are natively pre-installed in Python, but are nonetheless listed below:
@@ -49,7 +53,7 @@ $ deactivate
 ## Updating Script Parameters
 The parameter of each model can be updated. The arguments can be individually viewed:
 ```
-$ Python3 iris.py  --help
+$ python3 iris.py  --help
 ```
 
 Which will return:
@@ -63,9 +67,9 @@ optional arguments :
 
 Samples commands:
 ```
-$ Python3 RGB.py -d -r=0.8 -i=1000
-$ Python3 iris.py -d -r=0.3
-$ Python3 som.py -d -r=0.3 -iTr=100 -iTe=100 -t=d
+$ python3 RGB.py -d -r=0.8 -i=1000
+$ python3 iris.py -d -r=0.3
+$ python3 som.py -d -r=0.3 -iTr=100 -iTe=100 -t=d
 ```
 Where:
 ```
