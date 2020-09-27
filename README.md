@@ -65,7 +65,7 @@ Samples commands:
 ```
 $ Python3 RGB.py -d -r=0.8 -i=1000
 $ Python3 iris.py -d -r=0.3
-$ Python3 som.py -d-r=0.3 -iTr=100 -iTe=100 -t=d
+$ Python3 som.py -d -r=0.3 -iTr=100 -iTe=100 -t=d
 ```
 Where:
 ```
@@ -76,6 +76,17 @@ Where:
 -iTe is the number of testing inputs
 -t is the flag to choose between digits (d), letters (l), or combined (c)
 ```
+
+## Common Bugs
+
+Use the following commands to fix the given bugs:
+
+- Bug: `TypeError: Couldn't find foreign struct converter for 'cairo.Context'`
+	- Solution: `sudo apt-get install python3-gi-cairo`
+
+- Bug: `som.py:595: UserWarning: Matplotlib is currently using agg, which is a non-GUI backend, so cannot show the figure.
+  plt.show()`
+	- Solution: `sudo apt-get install python3-tk`
 
 ## Running Flask
 

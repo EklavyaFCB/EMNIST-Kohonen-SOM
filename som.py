@@ -4,8 +4,9 @@
 
 # We're using sorted EMNIST Balanced 47 Classes data, to make a SOM
 
-import argparse
+import os
 import sys
+import argparse
 import datetime
 import numpy as np
 import pandas as pd
@@ -111,11 +112,11 @@ if args.debug:
 
 # Inputs (Sorted inputs of all 47 classes)
 #train_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainInputs.csv'
-train_inputs_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/Train.csv'
+train_inputs_path = 'static/data/Sorted/Train.csv'
 train_inputs = pd.read_csv(train_inputs_path, encoding='utf-8', header=None)
 
 #test_inputs_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestInputs.csv'
-test_inputs_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/Test.csv'
+test_inputs_path = 'static/data/Sorted/Test.csv'
 test_inputs = pd.read_csv(test_inputs_path, encoding='utf-8', header=None)
 
 if args.debug:
@@ -123,11 +124,11 @@ if args.debug:
 
 # Labels
 #train_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTrainLabels.txt'
-train_labels_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/TrainLabels.txt'
+train_labels_path = 'static/data/Sorted/TrainLabels.txt'
 train_labels = pd.read_csv(train_labels_path, encoding='utf-8', dtype=np.int8, header=None)
 
 #test_labels_path = '/Users/eklavya/Movies/EMNIST_csv/Balanced/Sorted/SortedTestLabels.txt'
-test_labels_path = 'http://cgi.csc.liv.ac.uk/~u5es2/EMNIST/Sorted/TestLabels.txt'
+test_labels_path = 'static/data/Sorted/TestLabels.txt'
 test_labels = pd.read_csv(test_labels_path, encoding='utf-8', dtype=np.int8, header=None)
 
 # Drawn input
@@ -138,14 +139,17 @@ if args.debug:
 	print('Loaded 2/3 files')
 
 if (args.type == 'd'):
-	colours_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/10Colors.csv'
-	save_path = '/Users/Eklavya/Movies/EMNIST_csv/Balanced/Runs/Digits/'
+	colours_path = 'static/data/10Colors.csv'
+	save_path = 'Runs/Digits/'
 elif (args.type == 'l'):
-	colours_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/47Colors.csv'
-	save_path = '/Users/Eklavya/Movies/EMNIST_csv/Balanced/Runs/Letters/'
+	colours_path = 'static/data/47Colors.csv'
+	save_path = 'Runs/Letters/'
 else: 
-	colours_path = '/Users/eklavya/Dropbox/__Liverpool/_390/SourceCode/47Colors.csv'
-	save_path = '/Users/Eklavya/Movies/EMNIST_csv/Balanced/Runs/Combined/'
+	colours_path = 'static/data/47Colors.csv'
+	save_path = 'Runs/Combined/'
+
+if not os.path.exists(save_path):
+        os.makedirs(save_path)
 
 class_colours = pd.read_csv(colours_path, encoding='utf-8', header=None)
 
