@@ -1,5 +1,18 @@
 # EMNIST-Kohonen-SOM
 
+## Cite
+
+```
+@thesis{sarkar2018artificial,
+  title={Artificial Neural Networks: Kohonen Self-Organising Maps},
+  author={Sarkar, Eklavya},
+  year={2018},
+  school={University of Liverpool},
+  type={Bachelor's Thesis},
+  url = {https://eklavyafcb.github.io/som.html},
+}
+```
+
 # Goal
 Use Kohonen's algorithm to make a Self Organising Maps for 3 different datasets:
 
@@ -11,12 +24,14 @@ The principal goal of this project is the implementation of a Kohonen Network as
 
 The aim is to provide an in-depth study of Kohonen’s algorithm, and present insights of its properties, by designing and implementing a complete and functional model. 
 
-# Install
+# Installation
 
 ## Data
 The balanced EMNIST dataset can be downloaded from [here](https://drive.google.com/drive/folders/14CQxzXz2zGFFW0kkmSbJ_gH50O6bha3a?usp=sharing).
 
-Please download the `Sorted` folder, and place it in `EMNIST-Kohonen-SOM/static/data/` for `som.py` to work.
+Please download and extract the `Sorted` folder, and place the it in `static/data/` for `som.py` to work.
+
+It should look like the following: `EMNIST-Kohonen-SOM/static/data/Sorted/` with 4 `.csv` files inside.
 
 ## Libraries
 
