@@ -3,9 +3,9 @@
 # Goal
 Use Kohonen's algorithm to make a Self Organising Maps for 3 different datasets:
 
-- RGB dataset
-- Iris dataset
-- EMNIST dataset
+- RGB Dataset
+- Iris Dataset
+- EMNIST Balanced Dataset
 
 The principal goal of this project is the implementation of a Kohonen Network as an application, in order to demonstrate its usefulness and explain the concepts of Machine Learning, by means of a converging Self-Organising Map.
 
